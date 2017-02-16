@@ -19,11 +19,15 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Ar
     ArtistListAdapter() {}
 
     public class ArtistListAdapterViewHolder extends RecyclerView.ViewHolder {
-        public final TextView mArtistNameTextView;
+        TextView mArtistNameTextView;
 
         ArtistListAdapterViewHolder (View view) {
             super(view);
             mArtistNameTextView = (TextView) view.findViewById(R.id.tv_artist_name);
+        }
+
+        void bind(String artistName) {
+            mArtistNameTextView.setText(artistName);
         }
     }
 
@@ -43,6 +47,7 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Ar
         Artist artistForPosition = mArtistData.get(position);
         String artistName = artistForPosition.getName();
         holder.mArtistNameTextView.setText(artistName);
+        holder.bind(artistName);
     }
 
     @Override
