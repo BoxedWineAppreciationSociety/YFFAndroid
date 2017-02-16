@@ -42,17 +42,17 @@ public class ArtistApiAdapter {
 
     public static List<Artist> getArtists() {
         Log.d(TAG, "About to get Artist Maps");
-        List<Map<String, String>> artistMapsFromApi = new ArtistApiAdapter().getArtistMaps();
+        List<Map<String, String>> artistMapsFromApi = getArtistMaps();
 
         return ArtistRepo.artistsFromMapList(artistMapsFromApi);
     }
 
-    public List<Map<String, String>> getArtistMaps() {
-        URL artistsUrl = ArtistApiAdapter.buildUrl();
+    public static List<Map<String, String>> getArtistMaps() {
+        URL artistsUrl = buildUrl();
         String artistsResponse = null;
         try {
             Log.d(TAG, "Hitting API");
-            artistsResponse = ArtistApiAdapter.getResponseFromHttpUrl(artistsUrl);
+            artistsResponse = getResponseFromHttpUrl(artistsUrl);
             Log.d(TAG, "Response: " + artistsResponse);
         } catch (IOException e) {
             e.printStackTrace();
