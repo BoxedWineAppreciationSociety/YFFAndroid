@@ -60,6 +60,7 @@ public class ArtistApiAdapter {
 
         try {
             // TODO: Parse Response
+            // Gson good library for going straight from json string -> java objects.
             Log.d(TAG, "Parsing Response: " + artistsResponse);
             JSONObject responseJSON = new JSONObject(artistsResponse);
             Log.d(TAG, responseJSON.toString());
@@ -87,6 +88,9 @@ public class ArtistApiAdapter {
      * @throws IOException Related to network and stream reading
      */
     public static String getResponseFromHttpUrl(URL url) throws IOException {
+
+        //Good to use the build in android library to get familiar with the inner workings. But if you want ease of use,
+        //I recommend OkHttp with Jackson/GSON library so you can go straight from JSON -> List<Artist> object.
         Log.d(TAG, "Getting response");
         Log.d(TAG, "URL: " + url.toString());
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
