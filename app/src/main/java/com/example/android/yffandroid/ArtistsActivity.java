@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.Collection;
 import java.util.Collections;
@@ -45,10 +46,16 @@ public class ArtistsActivity extends AppCompatActivity {
 
     private void listArtists() {
         Log.d(TAG, "Listing Artists");
-        new FetchArtistsTask().execute();
+        new FetchArtistsTask(mArtistListAdapter).execute();
     }
 
-    public class FetchArtistsTask extends AsyncTask<Void, Void, List<Artist>> {
+    public static class FetchArtistsTask extends AsyncTask<Void, Void, List<Artist>> {
+        WeakReference<ArtistListAdapter> artistListAdapterWeakReference;
+
+        public FetchArtistsTask(ArtistListAdapter artistListAdapter) {
+            this.artistListAdapterWeakReference = new WeakReference<>(artistListAdapter);
+        }
+
         @Override
         protected List<Artist> doInBackground (Void... params) {
             Log.d(TAG, "doInBackground");
@@ -58,8 +65,12 @@ public class ArtistsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             Log.d(TAG, "Setting artist data");
+
             Collections.sort(artists);
-            mArtistListAdapter.setArtistData(artists);
+            ArtistListAdapter artistListAdapter = artistListAdapterWeakReference.get();
+            if (artistListAdapter != null) {
+                artistListAdapter.setArtistData(artists);
+            }
         }
     }
 }
