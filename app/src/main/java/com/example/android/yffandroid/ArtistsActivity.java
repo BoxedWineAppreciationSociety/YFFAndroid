@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +58,7 @@ public class ArtistsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<Artist> artists) {
             Log.d(TAG, "Setting artist data");
+            Collections.sort(artists);
             mArtistListAdapter.setArtistData(artists);
         }
     }

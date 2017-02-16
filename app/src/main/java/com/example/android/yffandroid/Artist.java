@@ -4,7 +4,7 @@ package com.example.android.yffandroid;
  * Created by chris on 1/2/17.
  */
 
-public class Artist {
+public class Artist implements Comparable<Artist> {
     public String id;
     public String name;
 
@@ -15,5 +15,10 @@ public class Artist {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public int compareTo(Artist otherArtist) {
+        return getName().compareTo(otherArtist.getName());
     }
 }
