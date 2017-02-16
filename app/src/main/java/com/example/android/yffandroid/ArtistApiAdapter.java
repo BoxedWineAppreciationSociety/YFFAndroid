@@ -1,6 +1,6 @@
 package com.example.android.yffandroid;
 
-import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -13,7 +13,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +36,7 @@ public class ArtistApiAdapter {
         return url;
     }
 
-    ArtistApiAdapter() {
-        return;
-    }
+    ArtistApiAdapter() {};
 
     public static List<Artist> getArtists() {
         List<Map<String, String>> artistMapsFromApi = null;
@@ -49,49 +46,70 @@ public class ArtistApiAdapter {
     }
 
     public List<Map<String, String>> getArtistMaps() {
-        List<Map<String, String>> artists = new ArrayList<>();
+        List<Map<String, String>> artistMaps = new ArrayList<>();
 
         try {
-            URL artistsUrl = ArtistApiAdapter.buildUrl();
-            String artistsResponse = null;
-            artistsResponse = ArtistApiAdapter.getResponseFromHttpUrl(artistsUrl);
-            Log.d(TAG, "Response: " + artistsResponse);
-
-            JSONArray artistsJSONArray = null;
-
-            JSONObject responseJSON = new JSONObject(artistsResponse);
-            Log.d(TAG, responseJSON.toString());
-            artistsJSONArray = responseJSON.getJSONArray("artists");
-
-            Log.d(TAG, artistsResponse);
-
-            if (artistsJSONArray != null) {
-                int artistsJSONlength = artistsJSONArray.length();
-                for (int i = 0; i < artistsJSONlength; i++) {
-                    JSONObject artistJSON = null;
-                    try {
-                        artistJSON = artistsJSONArray.getJSONObject(i);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    if (artistJSON != null) {
-                        Map artist = new HashMap();
-                        String artistID = artistJSON.getString("id");
-                        String artistName = artistJSON.getString("name");
-                        artist.put("id", artistID);
-                        artist.put("name", artistName);
-                        artists.add(artist);
-                    }
-
-                }
-            } else {
-                Log.d(TAG, "Null artistsJSONArray");
-            }
-        } catch (IOException | JSONException e) {
+            String artistsResponse = getApiResponse();
+            artistMaps = getArtistMapsFromResponse(artistMaps, artistsResponse);
+        } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
+        return artistMaps;
+    }
+
+    private List<Map<String, String>> getArtistMapsFromResponse(List<Map<String, String>> artistMaps, String artistsResponse) throws JSONException {
+        JSONArray artistsJSONArray = getArtistsJSONArray(artistsResponse);
+        artistMaps = getArtistMapsFromJSONArray(artistsJSONArray);
+        return artistMaps;
+    }
+
+    private List<Map<String,String>> getArtistMapsFromJSONArray(JSONArray artistsJSONArray) throws JSONException {
+        ArrayList<Map<String,String>> artists = new ArrayList<>();
+
+        int artistsJSONlength = artistsJSONArray.length();
+        for (int i = 0; i < artistsJSONlength; i++) {
+
+            JSONObject artistJSON = artistsJSONArray.optJSONObject(i);
+            if (artistJSON != null) {
+                Map artist = getArtistMapFromJSON(artistJSON);
+                if (artist != null) {
+                    artists.add(artist);
+                }
+            }
+        }
+
         return artists;
+    }
+
+    @NonNull
+    private Map getArtistMapFromJSON(JSONObject artistJSON) {
+        Map artist = new HashMap();
+        String artistID = artistJSON.optString("id");
+        String artistName = artistJSON.optString("name");
+        artist.put("id", artistID);
+        artist.put("name", artistName);
+        if (artist.get("id") != null && artist.get("name") != null) {
+            return artist;
+        } else {
+            return null;
+        }
+    }
+
+    private JSONArray getArtistsJSONArray(String artistsResponse) throws JSONException {
+        JSONArray artistsJSONArray = null;
+        JSONObject responseJSON = new JSONObject(artistsResponse);
+        Log.d(TAG, responseJSON.toString());
+        artistsJSONArray = responseJSON.getJSONArray("artists");
+        return artistsJSONArray;
+    }
+
+    private String getApiResponse() throws IOException {
+        URL artistsUrl = ArtistApiAdapter.buildUrl();
+        String artistsResponse = null;
+        artistsResponse = ArtistApiAdapter.getResponseFromHttpUrl(artistsUrl);
+        Log.d(TAG, "Response: " + artistsResponse);
+        return artistsResponse;
     }
 
     /**
