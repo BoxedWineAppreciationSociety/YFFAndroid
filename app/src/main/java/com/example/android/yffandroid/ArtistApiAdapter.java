@@ -42,7 +42,6 @@ public class ArtistApiAdapter {
     }
 
     public static List<Artist> getArtists() {
-        Log.d(TAG, "About to get Artist Maps");
         List<Map<String, String>> artistMapsFromApi = null;
         artistMapsFromApi = new ArtistApiAdapter().getArtistMaps();
 
@@ -55,13 +54,11 @@ public class ArtistApiAdapter {
         try {
             URL artistsUrl = ArtistApiAdapter.buildUrl();
             String artistsResponse = null;
-            Log.d(TAG, "Hitting API");
             artistsResponse = ArtistApiAdapter.getResponseFromHttpUrl(artistsUrl);
             Log.d(TAG, "Response: " + artistsResponse);
 
             JSONArray artistsJSONArray = null;
 
-            Log.d(TAG, "Parsing Response: " + artistsResponse);
             JSONObject responseJSON = new JSONObject(artistsResponse);
             Log.d(TAG, responseJSON.toString());
             artistsJSONArray = responseJSON.getJSONArray("artists");
@@ -105,14 +102,9 @@ public class ArtistApiAdapter {
      * @throws IOException Related to network and stream reading
      */
     public static String getResponseFromHttpUrl(URL url) throws IOException {
-        Log.d(TAG, "Getting response");
-        Log.d(TAG, "URL: " + url.toString());
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        Log.d(TAG, "Opened Connection successfully");
         try {
-            Log.d(TAG, "Trying to get Input Stream");
             InputStream in = urlConnection.getInputStream();
-            Log.d(TAG, "Got Input Stream");
 
             Scanner scanner = new Scanner(in);
             scanner.useDelimiter("\\A");
