@@ -44,19 +44,19 @@ public class ArtistApiAdapter {
     public static List<Artist> getArtists() {
         Log.d(TAG, "About to get Artist Maps");
         List<Map<String, String>> artistMapsFromApi = null;
-        artistMapsFromApi = new ArtistApiAdapter().getArtistMaps();
+        artistMapsFromApi = getArtistMaps();
 
         return ArtistRepo.artistsFromMapList(artistMapsFromApi);
     }
 
-    public List<Map<String, String>> getArtistMaps() {
+    public static List<Map<String, String>> getArtistMaps() {
         List<Map<String, String>> artists = new ArrayList<>();
 
         try {
             URL artistsUrl = ArtistApiAdapter.buildUrl();
             String artistsResponse = null;
             Log.d(TAG, "Hitting API");
-            artistsResponse = ArtistApiAdapter.getResponseFromHttpUrl(artistsUrl);
+            artistsResponse = getResponseFromHttpUrl(artistsUrl);
             Log.d(TAG, "Response: " + artistsResponse);
 
             JSONArray artistsJSONArray = null;

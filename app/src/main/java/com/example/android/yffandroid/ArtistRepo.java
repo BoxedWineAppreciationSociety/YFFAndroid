@@ -71,7 +71,7 @@ public class ArtistRepo {
     }
 
     private static void loadArtists() {
-        List<Map<String, String>> artistMaps = new ArtistApiAdapter().getArtistMaps();
+        List<Map<String, String>> artistMaps = ArtistApiAdapter.getArtistMaps();
         loadedArtists = artistsFromMapList(artistMaps);
     }
 
