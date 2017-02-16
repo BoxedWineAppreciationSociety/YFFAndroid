@@ -3,6 +3,7 @@ package com.example.android.yffandroid;
 import android.net.Uri;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,40 +43,56 @@ public class ArtistApiAdapter {
 
     public static List<Artist> getArtists() {
         Log.d(TAG, "About to get Artist Maps");
-        List<Map<String, String>> artistMapsFromApi = getArtistMaps();
+        List<Map<String, String>> artistMapsFromApi = null;
+        artistMapsFromApi = getArtistMaps();
 
         return ArtistRepo.artistsFromMapList(artistMapsFromApi);
     }
 
     public static List<Map<String, String>> getArtistMaps() {
-        URL artistsUrl = buildUrl();
-        String artistsResponse = null;
+        List<Map<String, String>> artists = new ArrayList<>();
+
         try {
+            URL artistsUrl = ArtistApiAdapter.buildUrl();
+            String artistsResponse = null;
             Log.d(TAG, "Hitting API");
             artistsResponse = getResponseFromHttpUrl(artistsUrl);
             Log.d(TAG, "Response: " + artistsResponse);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        try {
-            // TODO: Parse Response
-            // Gson good library for going straight from json string -> java objects.
+            JSONArray artistsJSONArray = null;
+
             Log.d(TAG, "Parsing Response: " + artistsResponse);
             JSONObject responseJSON = new JSONObject(artistsResponse);
             Log.d(TAG, responseJSON.toString());
-        } catch (JSONException e) {
+            artistsJSONArray = responseJSON.getJSONArray("artists");
+
+            Log.d(TAG, artistsResponse);
+
+            if (artistsJSONArray != null) {
+                int artistsJSONlength = artistsJSONArray.length();
+                for (int i = 0; i < artistsJSONlength; i++) {
+                    JSONObject artistJSON = null;
+                    try {
+                        artistJSON = artistsJSONArray.getJSONObject(i);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    if (artistJSON != null) {
+                        Map artist = new HashMap();
+                        String artistID = artistJSON.getString("id");
+                        String artistName = artistJSON.getString("name");
+                        artist.put("id", artistID);
+                        artist.put("name", artistName);
+                        artists.add(artist);
+                    }
+
+                }
+            } else {
+                Log.d(TAG, "Null artistsJSONArray");
+            }
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-
-        Log.d(TAG, artistsResponse);
-        List<Map<String, String>> artists = new ArrayList<>();
-        Map artist = new HashMap();
-        // TODO: Turn response into list of maps
-        artist.put("id", "1D3D3DD1-3C8D-F828-0E42-D9E82B70ECF8");
-        artist.put("name", "Joel Sulman");
-
-        artists.add(artist);
 
         return artists;
     }
@@ -88,16 +105,12 @@ public class ArtistApiAdapter {
      * @throws IOException Related to network and stream reading
      */
     public static String getResponseFromHttpUrl(URL url) throws IOException {
-
-        //Good to use the build in android library to get familiar with the inner workings. But if you want ease of use,
-        //I recommend OkHttp with Jackson/GSON library so you can go straight from JSON -> List<Artist> object.
         Log.d(TAG, "Getting response");
         Log.d(TAG, "URL: " + url.toString());
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         Log.d(TAG, "Opened Connection successfully");
         try {
             Log.d(TAG, "Trying to get Input Stream");
-            // TODO: Work out why we're not getting an input stream
             InputStream in = urlConnection.getInputStream();
             Log.d(TAG, "Got Input Stream");
 
