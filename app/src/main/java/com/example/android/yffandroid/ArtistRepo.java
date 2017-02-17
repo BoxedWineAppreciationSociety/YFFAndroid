@@ -1,5 +1,7 @@
 package com.example.android.yffandroid;
 
+import android.util.Log;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +11,7 @@ import java.util.Map;
  */
 
 public class ArtistRepo {
+    private static final String TAG = "ArtistRepo";
     private static List<Artist> mLoadedArtists = new LinkedList<>();
     private static List<Artist> mLocalArtists = new LinkedList<>();
 
@@ -36,7 +39,7 @@ public class ArtistRepo {
     public static Artist getArtist(String artistID) {
         for (int i = 0; i < mLoadedArtists.size(); i++) {
             Artist artist = mLoadedArtists.get(i);
-            if (artist.getId() == artistID) {
+            if (artist.getId().equals(artistID)) {
                 return artist;
             }
         }
@@ -50,8 +53,9 @@ public class ArtistRepo {
         for (Map artistMap : artistMaps) {
             String id = artistMap.get("id").toString();
             String name = artistMap.get("name").toString();
+            String about = artistMap.get("about").toString();
 
-            Artist newArtist = new Artist(id, name);
+            Artist newArtist = new Artist(id, name, about);
             artists.add(newArtist);
         }
 
