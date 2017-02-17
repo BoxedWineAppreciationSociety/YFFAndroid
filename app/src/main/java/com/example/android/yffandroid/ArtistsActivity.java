@@ -2,24 +2,16 @@ package com.example.android.yffandroid;
 
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.net.URL;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 public class ArtistsActivity extends AppCompatActivity implements ArtistListAdapter.ArtistAdapterOnClickHandler {
     private RecyclerView mRecyclerView;
@@ -45,12 +37,10 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistListAdap
         mArtistListAdapter = new ArtistListAdapter(this);
         mRecyclerView.setAdapter(mArtistListAdapter);
 
-        listArtists();
-    }
+        ArtistRepo.initLocalArtists();
 
-    private void listArtists() {
-        Log.d(TAG, "Listing Artists");
-        new FetchArtistsTask(mArtistListAdapter).execute();
+        listArtists();
+        fetchArtists();
     }
 
     @Override
@@ -71,13 +61,13 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistListAdap
 
         @Override
         protected Void doInBackground (Void... params) {
-            ArtistRepo.initLocalArtists();
             ArtistRepo.loadArtists();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            // Can I de-duplicate the listing logic?
             List<Artist> artists = ArtistRepo.getArtists();
             Collections.sort(artists);
             ArtistListAdapter artistListAdapter = artistListAdapterWeakReference.get();
@@ -85,5 +75,16 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistListAdap
                 artistListAdapter.setArtistData(artists);
             }
         }
+    }
+
+    private void fetchArtists() {
+        Log.d(TAG, "Listing Artists");
+        new FetchArtistsTask(mArtistListAdapter).execute();
+    }
+
+    private void listArtists() {
+        List<Artist> artists = ArtistRepo.getArtists();
+        Collections.sort(artists);
+        mArtistListAdapter.setArtistData(artists);
     }
 }
