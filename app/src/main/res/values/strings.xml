@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">YFFAndroid</string>
+    <string name="artist_detail_text">This is the artist detail</string>
 </resources>

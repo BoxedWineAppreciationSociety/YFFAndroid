@@ -38,13 +38,6 @@ public class ArtistApiAdapter {
 
     ArtistApiAdapter() {};
 
-    public static List<Artist> getArtists() {
-        List<Map<String, String>> artistMapsFromApi = null;
-        artistMapsFromApi = new ArtistApiAdapter().getArtistMaps();
-
-        return ArtistRepo.artistsFromMapList(artistMapsFromApi);
-    }
-
     public List<Map<String, String>> getArtistMaps() {
         List<Map<String, String>> artistMaps = new ArrayList<>();
 
@@ -87,8 +80,10 @@ public class ArtistApiAdapter {
         Map artist = new HashMap();
         String artistID = artistJSON.optString("id");
         String artistName = artistJSON.optString("name");
+        String artistAbout = artistJSON.optString("summary");
         artist.put("id", artistID);
         artist.put("name", artistName);
+        artist.put("about", artistAbout);
         if (artist.get("id") != null && artist.get("name") != null) {
             return artist;
         } else {

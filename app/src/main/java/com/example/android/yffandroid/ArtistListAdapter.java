@@ -16,18 +16,34 @@ import java.util.List;
 public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.ArtistListAdapterViewHolder> {
     private List<Artist> mArtistData;
 
-    ArtistListAdapter() {}
+    private final ArtistAdapterOnClickHandler mClickHandler;
 
-    public class ArtistListAdapterViewHolder extends RecyclerView.ViewHolder {
+    ArtistListAdapter(ArtistAdapterOnClickHandler clickHandler) {
+        mClickHandler = clickHandler;
+    }
+
+    interface ArtistAdapterOnClickHandler {
+        void onClick(String artistId);
+    }
+
+    public class ArtistListAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView mArtistNameTextView;
 
         ArtistListAdapterViewHolder (View view) {
             super(view);
             mArtistNameTextView = (TextView) view.findViewById(R.id.tv_artist_name);
+            view.setOnClickListener(this);
         }
 
         void bind(String artistName) {
             mArtistNameTextView.setText(artistName);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            Artist artist = mArtistData.get(adapterPosition);
+            mClickHandler.onClick(artist.getId());
         }
     }
 
