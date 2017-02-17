@@ -1,5 +1,7 @@
 package com.example.android.yffandroid;
 
+import android.content.Context;
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -18,10 +21,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ArtistsActivity extends AppCompatActivity {
+public class ArtistsActivity extends AppCompatActivity implements ArtistListAdapter.ArtistAdapterOnClickHandler {
     private RecyclerView mRecyclerView;
     private ArtistListAdapter mArtistListAdapter;
 
+    public static final String DETAIL_KEY = "artistID";
     private static final String TAG = "ArtistsActivity";
 
     @Override
@@ -38,7 +42,7 @@ public class ArtistsActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mArtistListAdapter = new ArtistListAdapter();
+        mArtistListAdapter = new ArtistListAdapter(this);
         mRecyclerView.setAdapter(mArtistListAdapter);
 
         listArtists();
@@ -49,7 +53,16 @@ public class ArtistsActivity extends AppCompatActivity {
         new FetchArtistsTask(mArtistListAdapter).execute();
     }
 
-    public static class FetchArtistsTask extends AsyncTask<Void, Void, List<Artist>> {
+    @Override
+    public void onClick(String artistId) {
+        Context context = this;
+        Class destinationActivity = ArtistDetailActivity.class;
+        Intent intentToStartActivity = new Intent(context, destinationActivity);
+        intentToStartActivity.putExtra(ArtistsActivity.DETAIL_KEY, artistId);
+        startActivity(intentToStartActivity);
+    }
+
+    public static class FetchArtistsTask extends AsyncTask<Void, Void, Void> {
         WeakReference<ArtistListAdapter> artistListAdapterWeakReference;
 
         public FetchArtistsTask(ArtistListAdapter artistListAdapter) {
@@ -57,15 +70,15 @@ public class ArtistsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Artist> doInBackground (Void... params) {
-            Log.d(TAG, "doInBackground");
-            return ArtistApiAdapter.getArtists();
+        protected Void doInBackground (Void... params) {
+            ArtistRepo.initLocalArtists();
+            ArtistRepo.loadArtists();
+            return null;
         }
 
         @Override
-        protected void onPostExecute(List<Artist> artists) {
-            Log.d(TAG, "Setting artist data");
-
+        protected void onPostExecute(Void aVoid) {
+            List<Artist> artists = ArtistRepo.getArtists();
             Collections.sort(artists);
             ArtistListAdapter artistListAdapter = artistListAdapterWeakReference.get();
             if (artistListAdapter != null) {

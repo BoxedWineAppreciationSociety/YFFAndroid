@@ -17,6 +17,8 @@ public class Artist implements Comparable<Artist> {
         return name;
     }
 
+    public String getId() { return id; }
+
     @Override
     public int compareTo(Artist otherArtist) {
         return getName().compareTo(otherArtist.getName());
