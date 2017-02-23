@@ -25,12 +25,11 @@ public class ArtistsActivity extends AppCompatActivity implements ArtistListAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artists);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_artists);
-
         int orientation = LinearLayoutManager.VERTICAL;
         boolean reverseLayout = false;
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, orientation, reverseLayout);
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_artists);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 

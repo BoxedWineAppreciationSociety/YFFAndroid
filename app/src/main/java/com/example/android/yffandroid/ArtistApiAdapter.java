@@ -13,10 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * Created by chris on 13/2/17.
@@ -78,17 +80,32 @@ public class ArtistApiAdapter {
     @NonNull
     private Map getArtistMapFromJSON(JSONObject artistJSON) {
         Map artist = new HashMap();
-        String artistID = artistJSON.optString("id");
-        String artistName = artistJSON.optString("name");
-        String artistAbout = artistJSON.optString("summary");
-        artist.put("id", artistID);
-        artist.put("name", artistName);
-        artist.put("about", artistAbout);
+        for (Map.Entry<String,String> entry : artistJSONMapping()) {
+            String value = artistJSON.optString(entry.getKey());
+            artist.put(entry.getValue(), value);
+        }
+
         if (artist.get("id") != null && artist.get("name") != null) {
             return artist;
         } else {
             return null;
         }
+    }
+
+    private static Set<Map.Entry<String,String>> artistJSONMapping() {
+        HashMap<String,String> attributeMappings = new HashMap<String,String>();
+
+        attributeMappings.put("id", "id");
+        attributeMappings.put("name", "name");
+        attributeMappings.put("summary", "about");
+        attributeMappings.put("youtube", "youtube");
+        attributeMappings.put("itunes", "itunes");
+        attributeMappings.put("soundcloud", "soundcloud");
+        attributeMappings.put("facebook", "facebook");
+        attributeMappings.put("twitter", "twitter");
+        attributeMappings.put("instagram", "instagram");
+
+        return attributeMappings.entrySet();
     }
 
     private JSONArray getArtistsJSONArray(String artistsResponse) throws JSONException {
