@@ -11,14 +11,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ArtistsActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ArtistDetailActivity"></activity>
+        <activity android:name=".ArtistsListFragment" />
+        <activity android:name=".ArtistDetailActivity" />
     </application>
 
 </manifest>
