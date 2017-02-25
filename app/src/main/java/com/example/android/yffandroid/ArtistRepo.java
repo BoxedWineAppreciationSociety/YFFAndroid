@@ -5,6 +5,7 @@ import android.util.Log;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by chris on 1/2/17.
@@ -56,6 +57,13 @@ public class ArtistRepo {
             String about = artistMap.get("about").toString();
 
             Artist newArtist = new Artist(id, name, about);
+            newArtist.setYoutubeUrl(artistMap.get("youtube").toString());
+            newArtist.setItunesUrl(artistMap.get("itunes").toString());
+            newArtist.setSoundcloudUrl(artistMap.get("soundcloud").toString());
+            newArtist.setFacebookUrl(artistMap.get("facebook").toString());
+            newArtist.setTwitterUrl(artistMap.get("twitter").toString());
+            newArtist.setInstagramUrl(artistMap.get("instagram").toString());
+
             artists.add(newArtist);
         }
 

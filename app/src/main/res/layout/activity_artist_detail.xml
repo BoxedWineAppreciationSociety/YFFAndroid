@@ -31,6 +31,20 @@
                 android:textSize="22sp"
                 android:id="@+id/tv_artist_about"
                 android:padding="16dp" />
+
+            <com.example.android.yffandroid.SocialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_facebook"
+                android:onClick="socialButtonClicked"
+                android:visibility="gone" />
+
+            <com.example.android.yffandroid.SocialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/sb_instagram"
+                android:onClick="socialButtonClicked"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </FrameLayout>
