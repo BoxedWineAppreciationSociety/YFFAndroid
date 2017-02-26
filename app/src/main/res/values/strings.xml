@@ -10,4 +10,8 @@
     <string name="drawer_close">close</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="program_title">Program</string>
+    <string name="event_map_title">Event Map</string>
+    <string name="artists_title">Artists</string>
+    <string name="more_title">More</string>
 </resources>

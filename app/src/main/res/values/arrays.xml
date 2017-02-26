@@ -2,7 +2,9 @@
 <resources>
 
     <string-array name="drawer_rows">
-        <item>@string/lorem</item>
-        <item>@string/something</item>
+        <item>@string/program_title</item>
+        <item>@string/event_map_title</item>
+        <item>@string/artists_title</item>
+        <item>@string/more_title</item>
     </string-array>
 </resources>
