@@ -3,4 +3,11 @@
     <string name="artist_detail_text">This is the artist detail</string>
     <string name="facebookButtonText">Facebook</string>
     <string name="instagramButtonText">Instagram</string>
+
+    <string name="lorem">lorem</string>
+    <string name="something">something</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
