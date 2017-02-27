@@ -10,10 +10,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private ActionBarDrawerToggle toggle=null;
     private DrawerLayout drawerLayout;
 
@@ -33,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
                         R.layout.drawer_row,
                         getResources().getStringArray(R.array.drawer_rows)));
 
+        drawer.setOnItemClickListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
+
+        drawerLayout.setDrawerListener(toggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -50,6 +52,29 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         toggle.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        switch (position) {
+            case 0:
+                showProgram();
+                break;
+            case 2:
+                showArtistList();
+                break;
+            default:
+                Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        drawerLayout.closeDrawers();
+    }
+
+    private void showProgram() {
+        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        ProgramFragment fragment = new ProgramFragment();
+        transaction.replace(R.id.content_fragment, fragment);
+        transaction.commit();
     }
 
     private void showArtistList() {
