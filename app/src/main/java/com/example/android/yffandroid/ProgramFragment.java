@@ -27,7 +27,7 @@ public class ProgramFragment extends Fragment implements  ProgramAdapter.Program
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArtistRepo.initLocalArtists();
+        PerformanceRepo.initLocalPerformances();
     }
 
     @Nullable
@@ -35,8 +35,6 @@ public class ProgramFragment extends Fragment implements  ProgramAdapter.Program
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_program, container, false);
 
-        int orientation = LinearLayoutManager.VERTICAL;
-        boolean reverseLayout = false;
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rv_program);
@@ -46,6 +44,7 @@ public class ProgramFragment extends Fragment implements  ProgramAdapter.Program
         mProgramAdapter = new ProgramAdapter(this);
         mRecyclerView.setAdapter(mProgramAdapter);
 
+        listArtists();
         return rootView;
     }
 
@@ -55,8 +54,7 @@ public class ProgramFragment extends Fragment implements  ProgramAdapter.Program
     }
 
     private void listArtists() {
-        List<Artist> artists = ArtistRepo.getArtists();
-        Collections.sort(artists);
-        mProgramAdapter.setArtistData(artists);
+        List<Performance> performances = PerformanceRepo.getPerformances();
+        mProgramAdapter.setPerformanceData(performances);
     }
 }

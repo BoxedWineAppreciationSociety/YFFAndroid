@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -14,15 +13,15 @@ import java.util.List;
  * Created by chris on 28/2/17.
  */
 
-public class ProgramAdapter extends RecyclerView.Adapter {
-    private List<Artist> mArtistData;
+public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramAdapterViewHolder> {
+    private List<Performance> mPerformanceData;
 
     private final ProgramAdapterOnClickHandler mClickHandler;
 
     ProgramAdapter(ProgramAdapterOnClickHandler clickHandler) { mClickHandler = clickHandler; }
 
-    public void setArtistData(List<Artist> artists) {
-        mArtistData = artists;
+    public void setPerformanceData(List<Performance> performances) {
+        mPerformanceData = performances;
         notifyDataSetChanged();
     }
 
@@ -33,41 +32,55 @@ public class ProgramAdapter extends RecyclerView.Adapter {
     public class ProgramAdapterViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
         TextView mArtistNameTextView;
+        TextView mPerformanceTimeTextView;
+        TextView mVenueName;
+        Performance mPerformance;
+        Artist mArtist;
 
         ProgramAdapterViewHolder (View view) {
             super(view);
             mArtistNameTextView = (TextView) view.findViewById(R.id.tv_artist_name);
+            mPerformanceTimeTextView = (TextView) view.findViewById(R.id.tv_performance_time);
+            mVenueName = (TextView) view.findViewById(R.id.tv_venue_name);
             view.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            Artist artist = mArtistData.get(adapterPosition);
-            mClickHandler.onClick(artist.getId());
+            Performance performance = mPerformanceData.get(adapterPosition);
+            mClickHandler.onClick(performance.getId());
+        }
+
+        void bind(Performance performance) {
+            mPerformance = performance;
+            mArtist = ArtistRepo.getArtist(performance.getArtistId());
+            mArtistNameTextView.setText(mArtist.getName());
+            mPerformanceTimeTextView.setText(mPerformance.getTime());
+            mVenueName.setText(mPerformance.getVenue());
         }
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public ProgramAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        int layoutIdForListItem = R.layout.artist_list_item;
+        int layoutIdForListItem = R.layout.program_list_item;
         boolean shouldAttachImmediately = false;
         View view = inflater.inflate(layoutIdForListItem, viewGroup, shouldAttachImmediately);
         return new ProgramAdapterViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Artist artistForPosition = mArtistData.get(position);
-        String artistName = artistForPosition.getName();
+    public void onBindViewHolder(ProgramAdapterViewHolder holder, int position) {
+        Performance performanceForPosition = mPerformanceData.get(position);
+        holder.bind(performanceForPosition);
     }
 
     @Override
     public int getItemCount() {
-        if(null == mArtistData) return 0;
-        return mArtistData.size();
+        if(null == mPerformanceData) return 0;
+        return mPerformanceData.size();
     }
 }
