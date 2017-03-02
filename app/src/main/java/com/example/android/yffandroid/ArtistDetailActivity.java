@@ -1,7 +1,9 @@
 package com.example.android.yffandroid;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,6 +31,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
         mArtist = getArtistFromExtra();
 
         displayArtist();
+        setupActionBar();
     }
 
     private void displayArtist() {
@@ -70,5 +73,14 @@ public class ArtistDetailActivity extends AppCompatActivity {
 
         Intent socialIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(destinationUrl));
         startActivity(socialIntent);
+    }
+
+    private void setupActionBar() {
+        ActionBar artistListActionBar = getSupportActionBar();
+        artistListActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFOlive)));
+
+        artistListActionBar.setTitle("Artist");
+
+
     }
 }

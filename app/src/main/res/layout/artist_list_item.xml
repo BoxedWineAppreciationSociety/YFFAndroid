@@ -6,13 +6,14 @@
     <TextView
         android:id="@+id/tv_artist_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:padding="40dp"
-        android:fontFamily="sans-serif"/>
+        android:layout_height="60dp"
+        android:textSize="26sp"
+        android:padding="17dp"
+        android:fontFamily="sans-serif"
+        android:textColor="@color/colorYFFTextPrimary"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/colorYFFGrey" />
 </LinearLayout>

@@ -2,8 +2,12 @@ package com.example.android.yffandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +51,8 @@ public class ArtistsListFragment extends android.app.Fragment implements ArtistL
 
         listArtists();
         fetchArtists();
+        setActionBarColor();
+
         return rootView;
     }
 
@@ -93,5 +99,12 @@ public class ArtistsListFragment extends android.app.Fragment implements ArtistL
         List<Artist> artists = ArtistRepo.getArtists();
         Collections.sort(artists);
         mArtistListAdapter.setArtistData(artists);
+    }
+
+    private void setActionBarColor() {
+        ActionBar artistsActivityActionBar = getSupportActionBar();
+        artistsActivityActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFOlive)));
+
+        artistsActivityActionBar.setTitle("Artists");
     }
 }
