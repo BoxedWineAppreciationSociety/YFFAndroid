@@ -54,7 +54,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
             mPerformance = performance;
             mArtist = ArtistRepo.getArtist(performance.getArtistId());
             mArtistNameTextView.setText(mArtist.getName());
-            mPerformanceTimeTextView.setText(mPerformance.getTime());
+            mPerformanceTimeTextView.setText(mPerformance.formattedTime());
             mVenueName.setText(mPerformance.getVenue());
         }
     }

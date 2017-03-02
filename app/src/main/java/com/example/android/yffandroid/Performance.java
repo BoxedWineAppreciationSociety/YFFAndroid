@@ -1,5 +1,8 @@
 package com.example.android.yffandroid;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by chris on 1/3/17.
  */
@@ -8,7 +11,7 @@ public class Performance {
     public String id;
     public String artistId;
     public String venue;
-    public String time;
+    public long time;
 
     public Performance(String id, String artistId) {
         this.id = id;
@@ -27,7 +30,7 @@ public class Performance {
         return venue;
     }
 
-    public String getTime() {
+    public long getTime() {
         return time;
     }
 
@@ -35,7 +38,13 @@ public class Performance {
         this.venue = venue;
     }
 
-    public void setTime(String time) {
+    public void setTime(long time) {
         this.time = time;
+    }
+
+    public String formattedTime() {
+        Date date = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("k:mm");
+        return format.format(date);
     }
 }
