@@ -17,10 +17,10 @@ public class ArtistRepo {
     private static List<Artist> mLocalArtists = new LinkedList<>();
 
     public static void initLocalArtists() {
-        List<Artist> localArtists = new LinkedList<Artist>();
+        List<Artist> localArtists = new LinkedList<>();
         localArtists.add(new Artist("123", "Avril Lavigne"));
-        localArtists.add(new Artist("123", "Slipknot"));
-        localArtists.add(new Artist("123", "Slayer"));
+        localArtists.add(new Artist("456", "Slipknot"));
+        localArtists.add(new Artist("789", "Slayer"));
         mLocalArtists = localArtists;
     }
 
@@ -45,7 +45,7 @@ public class ArtistRepo {
             }
         }
 
-        return new Artist("9B45ACB9-9656-080A-EB5A-90350C70CDA5", "NOT AN ARTIST");
+        return new Artist("9B45ACB9-9656-080A-EB5A-90350C70CDA5", "COULD NOT FIND ARTIST");
     }
 
     public static List<Artist> artistsFromMapList(List<Map<String, String>> artistMaps) {

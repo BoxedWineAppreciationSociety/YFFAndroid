@@ -58,7 +58,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
     }
 
     private Artist getArtistFromExtra() {
-        String artistID = getIntent().getStringExtra(ArtistsActivity.DETAIL_KEY);
+        String artistID = getIntent().getStringExtra(ArtistsListFragment.DETAIL_KEY);
         Artist artist = ArtistRepo.getArtist(artistID);
         return artist;
     }
