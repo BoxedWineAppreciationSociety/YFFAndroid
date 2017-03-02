@@ -1,6 +1,7 @@
 package com.example.android.yffandroid;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ public class ArtistListAdapter extends RecyclerView.Adapter<ArtistListAdapter.Ar
         ArtistListAdapterViewHolder (View view) {
             super(view);
             mArtistNameTextView = (TextView) view.findViewById(R.id.tv_artist_name);
+            Typeface bebasNeue = Typeface.createFromAsset(mArtistNameTextView.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
+            mArtistNameTextView.setTypeface(bebasNeue);
             view.setOnClickListener(this);
         }
 

@@ -15,15 +15,15 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:orientation="vertical">
             <TextView
                 android:text="@string/artist_detail_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 android:id="@+id/tv_artist_name"
-                android:padding="16dp"/>
+                android:fontFamily="sans-serif" />
 
             <TextView
                 android:layout_width="match_parent"
