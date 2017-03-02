@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by chris on 1/3/17.
@@ -11,8 +12,9 @@ import java.util.List;
 
 public class PerformanceRepo {
     private static final String TAG = "PerformanceRepo";
-    private static List<Performance> mLoadedPerformances = new LinkedList<>();
+    private static List<Performance> mLoadedPerformancesFriday = new LinkedList<>();
     private static List<Performance> mLocalPerformances = new LinkedList<>();
+    public static final String FRIDAY = "fri";
 
     public static void initLocalPerformances() {
         List<Performance> localPerformances = new LinkedList<>();
@@ -32,23 +34,42 @@ public class PerformanceRepo {
     }
 
     public static List<Performance> getPerformances() {
-        if (mLoadedPerformances.size() < 1) {
+        if (mLoadedPerformancesFriday.size() < 1) {
             return mLocalPerformances;
         } else {
-            return mLoadedPerformances;
+            return mLoadedPerformancesFriday;
         }
     }
 
-    public static Performance getPerformance(String artistID) {
+    public static void loadPerformances() {
+        List<Map<String, String>> performanceMaps = new PerformanceApiAdapter().getPerformanceMaps(PerformanceRepo.FRIDAY);
+        mLoadedPerformancesFriday = performancesFromMapList(performanceMaps);
+    }
+
+    public static Performance getPerformance(String performanceID) {
         List<Performance> performances = getPerformances();
         for (int i = 0; i < performances.size(); i++) {
             Performance performance = performances.get(i);
-            if (performance.getId().equals(artistID)) {
+            if (performance.getId().equals(performanceID)) {
                 return performance;
             }
         }
 
         Log.d(TAG, "Could not find Performance");
         return new Performance("9B45ACB9-9656-080A-EB5A-90350C70CDA5", "NOT A PERFORMANCE");
+    }
+
+    public static List<Performance> performancesFromMapList(List<Map<String, String>> performanceMaps) {
+        List<Performance> performances = new LinkedList<>();
+
+        for (Map performanceMap : performanceMaps) {
+            String id = performanceMap.get("id").toString();
+            String artistId = performanceMap.get("artistId").toString();
+
+            Performance newPerformance = new Performance(id, artistId);
+            performances.add(newPerformance);
+        }
+
+        return performances;
     }
 }

@@ -47,9 +47,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
 
         @Override
         public void onClick(View v) {
-            int adapterPosition = getAdapterPosition();
-            Performance performance = mPerformanceData.get(adapterPosition);
-            mClickHandler.onClick(performance.getId());
+            mClickHandler.onClick(mArtist.getId());
         }
 
         void bind(Performance performance) {

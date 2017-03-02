@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT).show();
                 break;
         }
-        drawerLayout.closeDrawers();
+        drawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     private void showProgram() {
