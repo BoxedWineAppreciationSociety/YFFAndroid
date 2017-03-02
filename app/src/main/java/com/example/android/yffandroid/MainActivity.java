@@ -1,5 +1,7 @@
 package com.example.android.yffandroid;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case 0:
                 showProgram();
                 break;
+            case 1:
+                showEventMap();
+                break;
             case 2:
                 showArtistList();
                 break;
@@ -84,5 +89,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArtistsListFragment fragment = new ArtistsListFragment();
         transaction.replace(R.id.content_fragment, fragment);
         transaction.commit();
+    }
+
+    private void showEventMap() {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://yackfolkfestival.com/festival-info/map/"));
+        startActivity(intent);
     }
 }
