@@ -14,4 +14,7 @@
     <string name="event_map_title">Event Map</string>
     <string name="artists_title">Artists</string>
     <string name="more_title">More</string>
+    <string name="btn_friday_text">Fri Mar 24</string>
+    <string name="btn_saturday_text">Sat Mar 25</string>
+    <string name="btn_sunday_text">Sun Mar 26</string>
 </resources>
