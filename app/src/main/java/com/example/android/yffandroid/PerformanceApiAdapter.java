@@ -63,6 +63,9 @@ public class PerformanceApiAdapter {
                 case Performance.SUNDAY:
                     url = new URL(SUN_PERFORMANCES_URL);
                     break;
+                default:
+                    url = new URL(FRI_PERFORMANCES_URL);
+                    break;
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
