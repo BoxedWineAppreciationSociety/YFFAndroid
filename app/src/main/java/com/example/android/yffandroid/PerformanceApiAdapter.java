@@ -24,10 +24,12 @@ import java.util.Set;
  */
 public class PerformanceApiAdapter {
     public static final String FRI_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/fri_performances_remote.json";
+    public static final String SAT_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/sat_performances_remote.json";
+    public static final String SUN_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/sun_performances_remote.json";
 
     public static final String TAG = "PerformanceApiAdapter";
 
-    public List<Map<String, String>> getPerformanceMaps(String day) {
+    public List<Map<String, String>> getPerformanceMaps(int day) {
         List<Map<String, String>> performanceMaps = new ArrayList<>();
 
         try {
@@ -40,7 +42,7 @@ public class PerformanceApiAdapter {
         return performanceMaps;
     }
 
-    private String getApiResponse(String day) throws IOException {
+    private String getApiResponse(int day) throws IOException {
         URL performancesURL = PerformanceApiAdapter.buildUrl(day);
         String performancesResponse = null;
         performancesResponse = PerformanceApiAdapter.getResponseFromHttpUrl(performancesURL);
@@ -48,11 +50,20 @@ public class PerformanceApiAdapter {
         return performancesResponse;
     }
 
-    public static URL buildUrl(String day) {
-        // TODO: Use day
+    public static URL buildUrl(int day) {
         URL url = null;
         try {
-            url = new URL(FRI_PERFORMANCES_URL);
+            switch (day) {
+                case Performance.FRIDAY:
+                    url = new URL(FRI_PERFORMANCES_URL);
+                    break;
+                case Performance.SATURDAY:
+                    url = new URL(SAT_PERFORMANCES_URL);
+                    break;
+                case Performance.SUNDAY:
+                    url = new URL(SUN_PERFORMANCES_URL);
+                    break;
+            }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

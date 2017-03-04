@@ -61,8 +61,8 @@ public class ProgramFragment extends Fragment
         mSunButton.setOnClickListener(this);
 
         styleSelectedButton(mFriButton);
-        listPerformances();
-        fetchPerformances();
+        listPerformances(Performance.SATURDAY);
+        fetchPerformances(Performance.SUNDAY);
         return rootView;
     }
 
@@ -80,14 +80,15 @@ public class ProgramFragment extends Fragment
         startActivity(intentToStartActivity);
     }
 
-    private void listPerformances() {
-        List<Performance> performances = PerformanceRepo.getPerformances();
+    private void listPerformances(int day) {
+        List<Performance> performances = PerformanceRepo.getPerformancesForDay(day);
         mProgramAdapter.setPerformanceData(performances);
     }
 
-    private void fetchPerformances() {
+    private void fetchPerformances(int day) {
         Log.d(TAG, "Fetching Performances");
-        new FetchPerformancesTask(mProgramAdapter).execute();
+        int[] params = { day };
+        new FetchPerformancesTask(mProgramAdapter).execute(params);
     }
 
     @Override
@@ -98,6 +99,18 @@ public class ProgramFragment extends Fragment
 
     private void onButtonSelected(Button v) {
         styleSelectedButton(v);
+        switch (v.getId()) {
+            case R.id.btn_friday:
+                fetchPerformances(Performance.FRIDAY);
+                break;
+            case R.id.btn_saturday:
+                fetchPerformances(Performance.SATURDAY);
+                break;
+            case R.id.btn_sunday:
+                fetchPerformances(Performance.SUNDAY);
+                break;
+
+        }
     }
 
     private void unSelectAllButtons() {
@@ -106,7 +119,7 @@ public class ProgramFragment extends Fragment
         mSunButton.setTextColor(getResources().getColor(black));
     }
 
-    public static class FetchPerformancesTask extends AsyncTask<Void, Void, Void> {
+    public static class FetchPerformancesTask extends AsyncTask<int[], Void, int[]> {
         WeakReference<ProgramAdapter> programAdapterWeakReference;
 
         public FetchPerformancesTask(ProgramAdapter artistListAdapter) {
@@ -114,15 +127,20 @@ public class ProgramFragment extends Fragment
         }
 
         @Override
-        protected Void doInBackground (Void... params) {
+        protected int[] doInBackground(int[]... params) {
+            Log.d(TAG, "Do in background");
             PerformanceRepo.loadPerformances();
-            return null;
+            Log.d(TAG, "Performances loaded");
+
+            return params[0];
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(int[] days) {
+            int day = days[0];
             // Can I de-duplicate the listing logic?
-            List<Performance> performances = PerformanceRepo.getPerformances();
+            List<Performance> performances = PerformanceRepo.getPerformancesForDay(day);
+            Log.d(TAG, "onPostExecute" + String.valueOf(performances));
 //            Collections.sort(performances);
             ProgramAdapter programAdapter = programAdapterWeakReference.get();
             if (programAdapter != null) {

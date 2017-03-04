@@ -2,6 +2,7 @@ package com.example.android.yffandroid;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 
 public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramAdapterViewHolder> {
+    private static final String TAG = "ProgramAdapter";
     private List<Performance> mPerformanceData;
 
     private final ProgramAdapterOnClickHandler mClickHandler;
@@ -21,6 +23,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
     ProgramAdapter(ProgramAdapterOnClickHandler clickHandler) { mClickHandler = clickHandler; }
 
     public void setPerformanceData(List<Performance> performances) {
+        Log.d(TAG, "setPerformanceData: " + String.valueOf(performances));
         mPerformanceData = performances;
         notifyDataSetChanged();
     }
