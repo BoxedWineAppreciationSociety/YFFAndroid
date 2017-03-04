@@ -1,11 +1,8 @@
 package com.example.android.yffandroid;
 
-import android.util.Log;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by chris on 1/2/17.

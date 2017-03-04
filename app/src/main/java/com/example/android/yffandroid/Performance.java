@@ -8,6 +8,10 @@ import java.util.Date;
  */
 
 public class Performance {
+    public static final int FRIDAY = 0;
+    public static final int SATURDAY = 1;
+    public static final int SUNDAY = 2;
+
     public String id;
     public String artistId;
     public String venue;

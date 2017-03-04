@@ -12,18 +12,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import java.lang.ref.WeakReference;
-import java.util.Collections;
 import java.util.List;
+
+import static android.R.color.black;
 
 /**
  * Created by chris on 28/2/17.
  */
 
-public class ProgramFragment extends Fragment implements  ProgramAdapter.ProgramAdapterOnClickHandler {
+public class ProgramFragment extends Fragment
+    implements  ProgramAdapter.ProgramAdapterOnClickHandler, View.OnClickListener {
     private RecyclerView mRecyclerView;
     private ProgramAdapter mProgramAdapter;
+    private Button mFriButton;
+    private Button mSatButton;
+    private Button mSunButton;
 
     private static final String TAG = "ProgramFragment";
 
@@ -47,9 +53,22 @@ public class ProgramFragment extends Fragment implements  ProgramAdapter.Program
         mProgramAdapter = new ProgramAdapter(this);
         mRecyclerView.setAdapter(mProgramAdapter);
 
-        listPerformances();
-        fetchPerformances();
+        mFriButton = (Button) rootView.findViewById(R.id.btn_friday);
+        mFriButton.setOnClickListener(this);
+        mSatButton = (Button) rootView.findViewById(R.id.btn_saturday);
+        mSatButton.setOnClickListener(this);
+        mSunButton = (Button) rootView.findViewById(R.id.btn_sunday);
+        mSunButton.setOnClickListener(this);
+
+        styleSelectedButton(mFriButton);
+        listPerformances(Performance.SATURDAY);
+        fetchPerformances(Performance.SUNDAY);
         return rootView;
+    }
+
+    private void styleSelectedButton(Button dayButton) {
+        int selectedColor = getResources().getColor(R.color.colorAccent);
+        dayButton.setTextColor(selectedColor);
     }
 
     @Override
@@ -61,17 +80,46 @@ public class ProgramFragment extends Fragment implements  ProgramAdapter.Program
         startActivity(intentToStartActivity);
     }
 
-    private void listPerformances() {
-        List<Performance> performances = PerformanceRepo.getPerformances();
+    private void listPerformances(int day) {
+        List<Performance> performances = PerformanceRepo.getPerformancesForDay(day);
         mProgramAdapter.setPerformanceData(performances);
     }
 
-    private void fetchPerformances() {
+    private void fetchPerformances(int day) {
         Log.d(TAG, "Fetching Performances");
-        new FetchPerformancesTask(mProgramAdapter).execute();
+        int[] params = { day };
+        new FetchPerformancesTask(mProgramAdapter).execute(params);
     }
 
-    public static class FetchPerformancesTask extends AsyncTask<Void, Void, Void> {
+    @Override
+    public void onClick(View v) {
+        unSelectAllButtons();
+        onButtonSelected((Button)v);
+    }
+
+    private void onButtonSelected(Button v) {
+        styleSelectedButton(v);
+        switch (v.getId()) {
+            case R.id.btn_friday:
+                fetchPerformances(Performance.FRIDAY);
+                break;
+            case R.id.btn_saturday:
+                fetchPerformances(Performance.SATURDAY);
+                break;
+            case R.id.btn_sunday:
+                fetchPerformances(Performance.SUNDAY);
+                break;
+
+        }
+    }
+
+    private void unSelectAllButtons() {
+        mFriButton.setTextColor(getResources().getColor(black));
+        mSatButton.setTextColor(getResources().getColor(black));
+        mSunButton.setTextColor(getResources().getColor(black));
+    }
+
+    public static class FetchPerformancesTask extends AsyncTask<int[], Void, int[]> {
         WeakReference<ProgramAdapter> programAdapterWeakReference;
 
         public FetchPerformancesTask(ProgramAdapter artistListAdapter) {
@@ -79,15 +127,20 @@ public class ProgramFragment extends Fragment implements  ProgramAdapter.Program
         }
 
         @Override
-        protected Void doInBackground (Void... params) {
+        protected int[] doInBackground(int[]... params) {
+            Log.d(TAG, "Do in background");
             PerformanceRepo.loadPerformances();
-            return null;
+            Log.d(TAG, "Performances loaded");
+
+            return params[0];
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
+        protected void onPostExecute(int[] days) {
+            int day = days[0];
             // Can I de-duplicate the listing logic?
-            List<Performance> performances = PerformanceRepo.getPerformances();
+            List<Performance> performances = PerformanceRepo.getPerformancesForDay(day);
+            Log.d(TAG, "onPostExecute" + String.valueOf(performances));
 //            Collections.sort(performances);
             ProgramAdapter programAdapter = programAdapterWeakReference.get();
             if (programAdapter != null) {
