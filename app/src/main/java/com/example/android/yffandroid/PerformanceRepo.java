@@ -50,14 +50,6 @@ public class PerformanceRepo {
         mLocalPerformancesSunday = localPerformancesSun;
     }
 
-    public static List<Performance> getPerformances() {
-        if (mLoadedPerformancesFriday.size() < 1) {
-            return mLocalPerformancesFriday;
-        } else {
-            return mLoadedPerformancesFriday;
-        }
-    }
-
     public static void loadPerformances() {
         Log.d(TAG, "Repo loading Performances");
         List<Map<String, String>> performanceMapsFri = new PerformanceApiAdapter().getPerformanceMaps(Performance.FRIDAY);
@@ -66,19 +58,6 @@ public class PerformanceRepo {
         mLoadedPerformancesSaturday = performancesFromMapList(performanceMapsSat);
         List<Map<String, String>> performanceMapsSun = new PerformanceApiAdapter().getPerformanceMaps(Performance.SUNDAY);
         mLoadedPerformancesSunday = performancesFromMapList(performanceMapsSun);
-    }
-
-    public static Performance getPerformance(String performanceID) {
-        List<Performance> performances = getPerformances();
-        for (int i = 0; i < performances.size(); i++) {
-            Performance performance = performances.get(i);
-            if (performance.getId().equals(performanceID)) {
-                return performance;
-            }
-        }
-
-        Log.d(TAG, "Could not find Performance");
-        return new Performance("9B45ACB9-9656-080A-EB5A-90350C70CDA5", "NOT A PERFORMANCE");
     }
 
     public static List<Performance> performancesFromMapList(List<Map<String, String>> performanceMaps) {
