@@ -1,5 +1,6 @@
 package com.example.android.yffandroid;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -11,10 +12,6 @@ import android.widget.TextView;
 
 public class ArtistDetailActivity extends AppCompatActivity {
     private TextView mArtistNameTextView;
-    private TextView mArtistAboutTextView;
-    // TODO: RecyclerView for available buttons
-    private SocialButton mFacebookButton;
-    private SocialButton mInstagramButton;
     private Artist mArtist;
     private static final String TAG = "ArtistDetailActivity";
 
@@ -25,12 +22,17 @@ public class ArtistDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_artist_detail);
 
         mArtistNameTextView = (TextView) findViewById(R.id.tv_artist_name);
-        mArtistAboutTextView = (TextView) findViewById(R.id.tv_artist_about);
-        mFacebookButton = (SocialButton) findViewById(R.id.sb_facebook);
-        mInstagramButton = (SocialButton) findViewById(R.id.sb_instagram);
         mArtist = getArtistFromExtra();
-
+//
         displayArtist();
+
+        if (getFragmentManager().findFragmentById(R.id.detail_content_fragment) == null) {
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            ArtistAboutFragment fragment = new ArtistAboutFragment();
+            fragment.setArtist(mArtist);
+            transaction.replace(R.id.detail_content_fragment, fragment);
+            transaction.commit();
+        }
         setupActionBar();
     }
 
@@ -38,27 +40,8 @@ public class ArtistDetailActivity extends AppCompatActivity {
         if (mArtist == null) { return; }
 
         mArtistNameTextView.setText(mArtist.getName());
-        mArtistAboutTextView.setText(mArtist.getAbout());
-
-        displayFacebookButton();
-        displayInstagramButton();
     }
 
-    private void displayFacebookButton() {
-        if(mArtist.getFacebookUrl() == null || mArtist.getFacebookUrl().equals("")) { return; }
-
-        mFacebookButton.setText(R.string.facebookButtonText);
-        mFacebookButton.setUrl(mArtist.getFacebookUrl());
-        mFacebookButton.setVisibility(View.VISIBLE);
-    }
-
-    private void displayInstagramButton() {
-        if(mArtist.getInstagramUrl() == null || mArtist.getInstagramUrl().equals("")) { return; }
-
-        mInstagramButton.setText(R.string.instagramButtonText);
-        mInstagramButton.setUrl(mArtist.getInstagramUrl());
-        mInstagramButton.setVisibility(View.VISIBLE);
-    }
 
     private Artist getArtistFromExtra() {
         String artistID = getIntent().getStringExtra(ArtistsListFragment.DETAIL_KEY);
@@ -80,7 +63,5 @@ public class ArtistDetailActivity extends AppCompatActivity {
         artistListActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFOlive)));
 
         artistListActionBar.setTitle("Artist");
-
-
     }
 }
