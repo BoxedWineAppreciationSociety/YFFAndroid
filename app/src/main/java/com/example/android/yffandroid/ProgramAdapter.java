@@ -1,6 +1,7 @@
 package com.example.android.yffandroid;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,6 +46,8 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
             mArtistNameTextView = (TextView) view.findViewById(R.id.tv_artist_name);
             mPerformanceTimeTextView = (TextView) view.findViewById(R.id.tv_performance_time);
             mVenueName = (TextView) view.findViewById(R.id.tv_venue_name);
+            Typeface bebasNeue = Typeface.createFromAsset(mArtistNameTextView.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
+            mArtistNameTextView.setTypeface(bebasNeue);
             view.setOnClickListener(this);
         }
 
