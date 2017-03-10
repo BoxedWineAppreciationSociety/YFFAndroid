@@ -6,16 +6,20 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity
+        implements AdapterView.OnItemClickListener, DrawerAdapter.DrawerAdapterOnClickHandler {
     private ActionBarDrawerToggle toggle=null;
     private DrawerLayout drawerLayout;
 
@@ -28,14 +32,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             showArtistList();
         }
 
-        ListView drawer = (ListView) findViewById(R.id.drawer);
-        drawer.setAdapter(
-                new ArrayAdapter<>(
-                        this,
-                        R.layout.drawer_row,
-                        getResources().getStringArray(R.array.drawer_rows)));
+        RecyclerView drawerRV = (RecyclerView) findViewById(R.id.drawer);
+        drawerRV.setLayoutManager(new LinearLayoutManager(this));
+        drawerRV.setHasFixedSize(true);
 
-        drawer.setOnItemClickListener(this);
+        String[] drawerRows = getResources().getStringArray(R.array.drawer_rows);
+        DrawerAdapter drawerAdapter = new DrawerAdapter(this, drawerRows);
+        drawerRV.setAdapter(drawerAdapter);
+
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
 
@@ -55,6 +59,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onOptionsItemSelected(MenuItem item) {
         toggle.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(int position) {
+        switch (position) {
+            case 0:
+                showProgram();
+                break;
+            case 1:
+                showEventMap();
+                break;
+            case 2:
+                showArtistList();
+                break;
+            default:
+                Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT).show();
+                break;
+        }
+        drawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     @Override
