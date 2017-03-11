@@ -17,4 +17,6 @@
     <string name="btn_friday_text">Fri Mar 24</string>
     <string name="btn_saturday_text">Sat Mar 25</string>
     <string name="btn_sunday_text">Sun Mar 26</string>
+    <string name="links_header">Links</string>
+    <string name="artist_about_header">About</string>
 </resources>

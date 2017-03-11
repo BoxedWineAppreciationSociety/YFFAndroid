@@ -2,6 +2,7 @@ package com.example.android.yffandroid;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
 
         mArtistNameTextView = (TextView) findViewById(R.id.tv_artist_name);
         mArtist = getArtistFromExtra();
-//
+
         displayArtist();
 
         if (getFragmentManager().findFragmentById(R.id.detail_content_fragment) == null) {
@@ -33,6 +34,9 @@ public class ArtistDetailActivity extends AppCompatActivity {
             transaction.replace(R.id.detail_content_fragment, fragment);
             transaction.commit();
         }
+
+        Typeface bebasNeue = Typeface.createFromAsset(mArtistNameTextView.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
+        mArtistNameTextView.setTypeface(bebasNeue);
         setupActionBar();
     }
 

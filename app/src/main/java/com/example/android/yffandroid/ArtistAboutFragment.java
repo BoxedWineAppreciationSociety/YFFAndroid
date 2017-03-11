@@ -1,6 +1,7 @@
 package com.example.android.yffandroid;
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 public class ArtistAboutFragment extends Fragment {
     private TextView mArtistAboutTextView;
+    private TextView mAboutHeaderTextView;
+    private TextView mLinksHeaderTextView;
     // TODO: RecyclerView for available buttons
     private SocialButton mFacebookButton;
     private SocialButton mInstagramButton;
@@ -29,8 +32,15 @@ public class ArtistAboutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.artist_detail_about, container, false);
         mArtistAboutTextView = (TextView) rootView.findViewById(R.id.tv_artist_about);
+        mAboutHeaderTextView = (TextView) rootView.findViewById(R.id.about_header);
+        mLinksHeaderTextView = (TextView) rootView.findViewById(R.id.links_header);
         mFacebookButton = (SocialButton) rootView.findViewById(R.id.sb_facebook);
         mInstagramButton = (SocialButton) rootView.findViewById(R.id.sb_instagram);
+
+        Typeface bebasNeue = Typeface.createFromAsset(mArtistAboutTextView.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
+
+        mAboutHeaderTextView.setTypeface(bebasNeue);
+        mLinksHeaderTextView.setTypeface(bebasNeue);
 
         displayArtist();
         return rootView;

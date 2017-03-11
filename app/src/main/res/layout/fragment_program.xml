@@ -6,30 +6,42 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:background="@drawable/program_bunting_bg"
+        android:layout_height="92dp">
 
         <Button
             android:text="@string/btn_friday_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/btn_friday"
             android:onClick="onDayButtonClicked"
+            android:background="@drawable/program_button_shape"
             android:layout_weight="1" />
 
         <Button
             android:text="@string/btn_saturday_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/btn_saturday"
+            android:background="@drawable/program_button_shape"
+
             android:layout_weight="1" />
 
         <Button
             android:text="@string/btn_sunday_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/btn_sunday"
+            android:background="@drawable/program_button_shape"
             android:layout_weight="1" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorYFFGrey" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_program"
