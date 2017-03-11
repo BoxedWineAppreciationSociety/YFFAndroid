@@ -39,18 +39,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:orientation="horizontal">
         <com.example.android.yffandroid.SocialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/sb_facebook"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/social_button_shape"
             android:onClick="socialButtonClicked"
             android:visibility="gone" />
 
         <com.example.android.yffandroid.SocialButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="16dp"
             android:id="@+id/sb_instagram"
+            android:background="@drawable/social_button_shape"
             android:onClick="socialButtonClicked"
             android:visibility="gone" />
     </LinearLayout>
