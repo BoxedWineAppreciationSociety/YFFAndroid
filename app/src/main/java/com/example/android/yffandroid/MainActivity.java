@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements AdapterView.OnItemClickListener, DrawerAdapter.DrawerAdapterOnClickHandler {
+        implements DrawerAdapter.DrawerAdapterOnClickHandler {
     private ActionBarDrawerToggle toggle=null;
     private DrawerLayout drawerLayout;
 
@@ -63,25 +63,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onClick(int position) {
-        switch (position) {
-            case 0:
-                showProgram();
-                break;
-            case 1:
-                showEventMap();
-                break;
-            case 2:
-                showArtistList();
-                break;
-            default:
-                Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT).show();
-                break;
-        }
-        drawerLayout.closeDrawer(Gravity.LEFT);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case 0:
                 showProgram();

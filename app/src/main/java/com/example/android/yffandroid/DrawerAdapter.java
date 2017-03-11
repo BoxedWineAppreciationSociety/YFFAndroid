@@ -1,10 +1,13 @@
 package com.example.android.yffandroid;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -27,10 +30,14 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerAdap
     public class DrawerAdapterViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener  {
         TextView mTextView;
+        ImageView mIconImageView;
 
         DrawerAdapterViewHolder(View view) {
             super(view);
             mTextView = (TextView) view.findViewById(R.id.tv_drawer_item);
+            mIconImageView = (ImageView) view.findViewById(R.id.iv_drawer_icon);
+            Typeface bebasNeue = Typeface.createFromAsset(view.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
+            mTextView.setTypeface(bebasNeue);
             view.setOnClickListener(this);
         }
 
@@ -38,6 +45,31 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerAdap
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
             mClickHandler.onClick(adapterPosition);
+        }
+
+        public void bind(int position) {
+            mTextView.setText(textForPosition(position));
+            mIconImageView.setImageDrawable(iconForPosition(position));
+        }
+
+        private Drawable iconForPosition(int position) {
+            int drawableId;
+
+            switch (position) {
+                case 0:
+                    drawableId = R.drawable.program_icon;
+                    break;
+                case 1:
+                    drawableId = R.drawable.map_icon;
+                    break;
+                case 2:
+                    drawableId = R.drawable.artists_icon;
+                    break;
+                default:
+                    drawableId = R.drawable.feed_icon;
+                    break;
+            }
+            return mIconImageView.getResources().getDrawable(drawableId);
         }
     }
 
@@ -53,7 +85,7 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerAdap
 
     @Override
     public void onBindViewHolder(DrawerAdapterViewHolder holder, int position) {
-        holder.mTextView.setText(textForPosition(position));
+        holder.bind(position);
     }
 
     private String textForPosition(int position) {
@@ -63,6 +95,6 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerAdap
 
     @Override
     public int getItemCount() {
-        return 4;
+        return mDrawerRows.length;
     }
 }

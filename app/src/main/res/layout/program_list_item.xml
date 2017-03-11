@@ -22,11 +22,11 @@
             android:id="@+id/tv_artist_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textStyle="bold"
             android:paddingLeft="16dp"
             android:paddingRight="40dp"
             android:paddingTop="16dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
             android:fontFamily="sans-serif"/>
 
         <TextView
