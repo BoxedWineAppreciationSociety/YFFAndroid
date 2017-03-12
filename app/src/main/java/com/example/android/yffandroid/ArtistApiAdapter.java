@@ -103,6 +103,7 @@ public class ArtistApiAdapter {
         attributeMappings.put("facebook", "facebook");
         attributeMappings.put("twitter", "twitter");
         attributeMappings.put("instagram", "instagram");
+        attributeMappings.put("website", "website");
 
         return attributeMappings.entrySet();
     }

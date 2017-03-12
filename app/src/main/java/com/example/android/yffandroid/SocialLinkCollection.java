@@ -36,7 +36,7 @@ public class SocialLinkCollection {
 
     private Set<Map.Entry<String, String>> socialLinks() {
         HashMap<String,String> mapping = new HashMap<>();
-        // TODO: Website link
+        mapping.put(SocialLink.WEBSITE, mArtist.getWebsiteUrl());
         mapping.put(SocialLink.FACEBOOK, mArtist.getFacebookUrl());
         mapping.put(SocialLink.YOUTUBE, mArtist.getYoutubeUrl());
         mapping.put(SocialLink.TWITTER, mArtist.getTwitterUrl());

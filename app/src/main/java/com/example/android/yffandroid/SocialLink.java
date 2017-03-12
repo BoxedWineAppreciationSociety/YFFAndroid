@@ -15,13 +15,14 @@ public class SocialLink implements Comparable<SocialLink> {
     public static final String ITUNES = "itunes";
     public static final String SOUNDCLOUD = "soundcloud";
     public static final String INSTAGRAM = "instagram";
+    public static final String WEBSITE = "website";
 
     private final int mColor;
     private final String mUrl;
     private final String mTitle;
 
     public static final String[] socials = {
-       FACEBOOK, YOUTUBE, TWITTER, ITUNES, SOUNDCLOUD, INSTAGRAM
+       WEBSITE, FACEBOOK, YOUTUBE, TWITTER, ITUNES, SOUNDCLOUD, INSTAGRAM
     };
 
     SocialLink() {
@@ -39,6 +40,9 @@ public class SocialLink implements Comparable<SocialLink> {
     private static int colorFor(String type) {
         int color;
         switch (type) {
+            case WEBSITE:
+                color = R.color.colorYFFOlive;
+                break;
             case FACEBOOK:
                 color = R.color.colorPrimaryDark;
                 break;
@@ -69,6 +73,9 @@ public class SocialLink implements Comparable<SocialLink> {
     private static String titleFor(String type) {
         String title;
         switch (type) {
+            case WEBSITE:
+                title = "Website";
+                break;
             case FACEBOOK:
                 title = "Facebook";
                 break;
