@@ -14,6 +14,7 @@ public class Artist implements Comparable<Artist> {
     public String facebookUrl;
     public String twitterUrl;
     public String instagramUrl;
+    public String websiteUrl;
 
     public Artist(String id, String name) {
         // Can this use the other constructor?
@@ -48,6 +49,9 @@ public class Artist implements Comparable<Artist> {
 
     public String getFacebookUrl() { return facebookUrl; }
 
+
+    public String getWebsiteUrl() { return websiteUrl; }
+
     public void setAbout(String about) { this.about = about; }
 
     public void setYoutubeUrl(String youtubeUrl) { this.youtubeUrl = youtubeUrl; }
@@ -61,7 +65,9 @@ public class Artist implements Comparable<Artist> {
     public void setTwitterUrl(String twitterUrl) { this.twitterUrl = twitterUrl; }
 
     public void setInstagramUrl(String instagramUrl) { this.instagramUrl = instagramUrl; }
-    
+
+    public void setWebsiteUrl(String websiteUrl) { this.websiteUrl = websiteUrl; }
+
     @Override
     public int compareTo(Artist otherArtist) {
         return getName().compareTo(otherArtist.getName());

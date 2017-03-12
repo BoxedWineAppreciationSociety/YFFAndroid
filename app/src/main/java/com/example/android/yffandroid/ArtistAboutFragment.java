@@ -1,9 +1,13 @@
 package com.example.android.yffandroid;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +17,11 @@ import android.widget.TextView;
  * Created by chris on 4/3/17.
  */
 
-public class ArtistAboutFragment extends Fragment {
+public class ArtistAboutFragment extends Fragment
+        implements LinksAdapter.LinksAdapterOnClickHandler {
     private TextView mArtistAboutTextView;
     private TextView mAboutHeaderTextView;
     private TextView mLinksHeaderTextView;
-    // TODO: RecyclerView for available buttons
-    private SocialButton mFacebookButton;
-    private SocialButton mInstagramButton;
     private Artist mArtist;
 
     @Override
@@ -27,6 +29,7 @@ public class ArtistAboutFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    // TODO: Display properly when activity recreated
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,13 +37,17 @@ public class ArtistAboutFragment extends Fragment {
         mArtistAboutTextView = (TextView) rootView.findViewById(R.id.tv_artist_about);
         mAboutHeaderTextView = (TextView) rootView.findViewById(R.id.about_header);
         mLinksHeaderTextView = (TextView) rootView.findViewById(R.id.links_header);
-        mFacebookButton = (SocialButton) rootView.findViewById(R.id.sb_facebook);
-        mInstagramButton = (SocialButton) rootView.findViewById(R.id.sb_instagram);
 
         Typeface bebasNeue = Typeface.createFromAsset(mArtistAboutTextView.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
 
         mAboutHeaderTextView.setTypeface(bebasNeue);
         mLinksHeaderTextView.setTypeface(bebasNeue);
+
+        RecyclerView linksRV = (RecyclerView) rootView.findViewById(R.id.rv_links);linksRV.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        linksRV.setHasFixedSize(true);
+
+        LinksAdapter linksAdapter = new LinksAdapter(this, mArtist);
+        linksRV.setAdapter(linksAdapter);
 
         displayArtist();
         return rootView;
@@ -53,29 +60,17 @@ public class ArtistAboutFragment extends Fragment {
         }
 
         mArtistAboutTextView.setText(mArtist.getAbout());
-
-        displayFacebookButton();
-        displayInstagramButton();
-    }
-
-
-    private void displayFacebookButton() {
-        if(mArtist.getFacebookUrl() == null || mArtist.getFacebookUrl().equals("")) { return; }
-
-        mFacebookButton.setText(R.string.facebookButtonText);
-        mFacebookButton.setUrl(mArtist.getFacebookUrl());
-        mFacebookButton.setVisibility(View.VISIBLE);
-    }
-
-    private void displayInstagramButton() {
-        if(mArtist.getInstagramUrl() == null || mArtist.getInstagramUrl().equals("")) { return; }
-
-        mInstagramButton.setText(R.string.instagramButtonText);
-        mInstagramButton.setUrl(mArtist.getInstagramUrl());
-        mInstagramButton.setVisibility(View.VISIBLE);
     }
 
     public void setArtist(Artist artist) {
         mArtist = artist;
+    }
+
+    @Override
+    public void onClick(String url) {
+        if (url == null || url.equals("")) { return; }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(intent);
     }
 }

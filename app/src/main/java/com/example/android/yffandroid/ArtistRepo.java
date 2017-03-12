@@ -60,6 +60,7 @@ public class ArtistRepo {
             newArtist.setFacebookUrl(artistMap.get("facebook").toString());
             newArtist.setTwitterUrl(artistMap.get("twitter").toString());
             newArtist.setInstagramUrl(artistMap.get("instagram").toString());
+            newArtist.setWebsiteUrl(artistMap.get("website").toString());
 
             artists.add(newArtist);
         }
