@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,8 @@ import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
-public class ArtistsListFragment extends android.app.Fragment implements ArtistListAdapter.ArtistAdapterOnClickHandler {
+public class ArtistsListFragment extends Fragment
+        implements ArtistListAdapter.ArtistAdapterOnClickHandler {
     private RecyclerView mRecyclerView;
     private ArtistListAdapter mArtistListAdapter;
 

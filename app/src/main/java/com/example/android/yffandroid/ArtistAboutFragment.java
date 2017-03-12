@@ -17,7 +17,7 @@ import android.widget.TextView;
  * Created by chris on 4/3/17.
  */
 
-public class ArtistAboutFragment extends Fragment
+public class ArtistAboutFragment extends android.support.v4.app.Fragment
         implements LinksAdapter.LinksAdapterOnClickHandler {
     private TextView mArtistAboutTextView;
     private TextView mAboutHeaderTextView;

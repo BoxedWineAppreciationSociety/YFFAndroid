@@ -82,14 +82,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showProgram() {
-        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ProgramFragment fragment = new ProgramFragment();
         transaction.replace(R.id.content_fragment, fragment);
         transaction.commit();
     }
 
     private void showArtistList() {
-        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ArtistsListFragment fragment = new ArtistsListFragment();
         transaction.replace(R.id.content_fragment, fragment);
         transaction.commit();

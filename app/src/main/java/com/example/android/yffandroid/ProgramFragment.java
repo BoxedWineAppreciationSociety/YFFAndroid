@@ -25,7 +25,7 @@ import static android.R.color.black;
  * Created by chris on 28/2/17.
  */
 
-public class ProgramFragment extends Fragment
+public class ProgramFragment extends android.support.v4.app.Fragment
     implements  ProgramAdapter.ProgramAdapterOnClickHandler, View.OnClickListener {
     private RecyclerView mRecyclerView;
     private ProgramAdapter mProgramAdapter;
