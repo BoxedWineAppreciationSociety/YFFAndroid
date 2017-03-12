@@ -15,15 +15,24 @@ import android.widget.TextView;
  */
 public class SummaryFragment extends android.support.v4.app.Fragment
         implements LinksAdapter.LinksAdapterOnClickHandler {
+    private static final String ARTIST_KEY = "artist";
     private TextView mArtistAboutTextView;
     private TextView mLinksHeaderTextView;
     private Artist mArtist;
+
+    public static SummaryFragment newInstance(Artist artist) {
+        SummaryFragment fragment = new SummaryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_KEY, artist.getId());
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.summary_fragment, container, false);
-        setArtist(ArtistRepo.getArtist("D7A52587-5AD0-DA40-F401-29130BB4ADC0"));
+        mArtist = ArtistRepo.getArtist(getArguments().getString(ARTIST_KEY));
         mArtistAboutTextView = (TextView) rootView.findViewById(R.id.tv_artist_about);
         mLinksHeaderTextView = (TextView) rootView.findViewById(R.id.links_header);
 

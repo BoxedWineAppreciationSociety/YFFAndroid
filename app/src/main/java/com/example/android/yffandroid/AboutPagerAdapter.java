@@ -13,15 +13,23 @@ import android.support.v4.view.PagerAdapter;
  */
 public class AboutPagerAdapter extends FragmentPagerAdapter {
     Context context;
+    Artist mArtist;
 
-    public AboutPagerAdapter(Context context, android.support.v4.app.FragmentManager mgr) {
+    public AboutPagerAdapter(Context context, android.support.v4.app.FragmentManager mgr, Artist artist) {
         super(mgr);
         this.context = context;
+        this.mArtist = artist;
     }
 
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
-        return(new SummaryFragment());
+        Artist artist = ArtistRepo.getArtist("B03982D8-BA81-3B63-1066-54CCAC1D3970");
+        switch(position) {
+            case 0:
+                return SummaryFragment.newInstance(artist);
+            default:
+                return new ArtistPerformancesFragment();
+        }
     }
 
     @Override

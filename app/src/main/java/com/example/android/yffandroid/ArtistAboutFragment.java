@@ -43,7 +43,8 @@ public class ArtistAboutFragment extends android.support.v4.app.Fragment
         mAboutHeaderTextView.setTypeface(bebasNeue);
         mLinksHeaderTextView.setTypeface(bebasNeue);
 
-        RecyclerView linksRV = (RecyclerView) rootView.findViewById(R.id.rv_links);linksRV.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        RecyclerView linksRV = (RecyclerView) rootView.findViewById(R.id.rv_links);
+        linksRV.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         linksRV.setHasFixedSize(true);
 
         LinksAdapter linksAdapter = new LinksAdapter(this, mArtist);

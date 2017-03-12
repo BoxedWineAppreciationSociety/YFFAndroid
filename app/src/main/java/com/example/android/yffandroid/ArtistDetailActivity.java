@@ -27,9 +27,9 @@ public class ArtistDetailActivity extends AppCompatActivity {
 
         displayArtist();
 
-        if (getFragmentManager().findFragmentById(R.id.detail_content_fragment) == null) {
+        if (getSupportFragmentManager().findFragmentById(R.id.detail_content_fragment) == null) {
             android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            ArtistAboutFragment fragment = new ArtistAboutFragment();
+            PagerFragment fragment = new PagerFragment();
             fragment.setArtist(mArtist);
             transaction.replace(R.id.detail_content_fragment, fragment);
             transaction.commit();
