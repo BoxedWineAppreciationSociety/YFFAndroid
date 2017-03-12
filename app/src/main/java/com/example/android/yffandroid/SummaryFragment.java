@@ -1,9 +1,6 @@
 package com.example.android.yffandroid;
 
-import android.app.Fragment;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,37 +11,36 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by chris on 4/3/17.
+ * Created by chris on 12/3/17.
  */
-
-public class ArtistAboutFragment extends android.support.v4.app.Fragment
+public class SummaryFragment extends android.support.v4.app.Fragment
         implements LinksAdapter.LinksAdapterOnClickHandler {
+    private static final String ARTIST_KEY = "artist";
     private TextView mArtistAboutTextView;
-    private TextView mAboutHeaderTextView;
     private TextView mLinksHeaderTextView;
     private Artist mArtist;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static SummaryFragment newInstance(Artist artist) {
+        SummaryFragment fragment = new SummaryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_KEY, artist.getId());
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
-    // TODO: Display properly when activity recreated
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.artist_detail_about, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.summary_fragment, container, false);
+        mArtist = ArtistRepo.getArtist(getArguments().getString(ARTIST_KEY));
         mArtistAboutTextView = (TextView) rootView.findViewById(R.id.tv_artist_about);
-        mAboutHeaderTextView = (TextView) rootView.findViewById(R.id.about_header);
         mLinksHeaderTextView = (TextView) rootView.findViewById(R.id.links_header);
 
         Typeface bebasNeue = Typeface.createFromAsset(mArtistAboutTextView.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
 
-        mAboutHeaderTextView.setTypeface(bebasNeue);
         mLinksHeaderTextView.setTypeface(bebasNeue);
 
-        RecyclerView linksRV = (RecyclerView) rootView.findViewById(R.id.rv_links);
-        linksRV.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        RecyclerView linksRV = (RecyclerView) rootView.findViewById(R.id.rv_links);linksRV.setLayoutManager(new LinearLayoutManager(rootView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         linksRV.setHasFixedSize(true);
 
         LinksAdapter linksAdapter = new LinksAdapter(this, mArtist);
@@ -69,9 +65,6 @@ public class ArtistAboutFragment extends android.support.v4.app.Fragment
 
     @Override
     public void onClick(String url) {
-        if (url == null || url.equals("")) { return; }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        startActivity(intent);
     }
 }

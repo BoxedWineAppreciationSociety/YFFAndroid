@@ -1,5 +1,6 @@
 package com.example.android.yffandroid;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -74,21 +75,21 @@ public class MainActivity extends AppCompatActivity
                 showArtistList();
                 break;
             default:
-                Toast.makeText(this, Integer.toString(position), Toast.LENGTH_SHORT).show();
+                showViewPager();
                 break;
         }
         drawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     private void showProgram() {
-        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ProgramFragment fragment = new ProgramFragment();
         transaction.replace(R.id.content_fragment, fragment);
         transaction.commit();
     }
 
     private void showArtistList() {
-        android.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         ArtistsListFragment fragment = new ArtistsListFragment();
         transaction.replace(R.id.content_fragment, fragment);
         transaction.commit();
@@ -97,5 +98,12 @@ public class MainActivity extends AppCompatActivity
     private void showEventMap() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://yackfolkfestival.com/festival-info/map/"));
         startActivity(intent);
+    }
+
+    private void showViewPager() {
+        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        PagerFragment fragment = new PagerFragment();
+        transaction.replace(R.id.content_fragment, fragment);
+        transaction.commit();
     }
 }

@@ -51,4 +51,10 @@ public class Performance {
         SimpleDateFormat format = new SimpleDateFormat("k:mm");
         return format.format(date);
     }
+
+    public String dateAndVenue() {
+        Date date = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("E d MMM");
+        return  format.format(date) + " • " + getVenue();
+    }
 }

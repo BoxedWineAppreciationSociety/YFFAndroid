@@ -27,8 +27,8 @@ public class ArtistDetailActivity extends AppCompatActivity {
 
         displayArtist();
 
-        if (getFragmentManager().findFragmentById(R.id.detail_content_fragment) == null) {
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (getSupportFragmentManager().findFragmentById(R.id.detail_content_fragment) == null) {
+            android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             ArtistAboutFragment fragment = new ArtistAboutFragment();
             fragment.setArtist(mArtist);
             transaction.replace(R.id.detail_content_fragment, fragment);

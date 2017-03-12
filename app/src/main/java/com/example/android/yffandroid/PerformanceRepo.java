@@ -107,4 +107,30 @@ public class PerformanceRepo {
             return loaded;
         }
     }
+
+    public static List<Performance> getPerformancesForArtist(Artist artist) {
+        if (getAllLoaded().size() < 1) {
+            return mLocalPerformancesSunday;
+        } else {
+            return filteredByArtist(getAllLoaded(), artist);
+        }
+    }
+
+    private static List<Performance> filteredByArtist(List<Performance> performances, final Artist artist) {
+        List<Performance> filtered = new LinkedList<>();
+        for(Performance perf : performances) {
+            if (perf.getArtistId().equals(artist.getId())) {
+                filtered.add(perf);
+            }
+        }
+        return filtered;
+    }
+
+    public static List<Performance> getAllLoaded() {
+        List<Performance> allLoaded = new LinkedList<>();
+        allLoaded.addAll(mLoadedPerformancesFriday);
+        allLoaded.addAll(mLoadedPerformancesSaturday);
+        allLoaded.addAll(mLoadedPerformancesSunday);
+        return allLoaded;
+    }
 }
