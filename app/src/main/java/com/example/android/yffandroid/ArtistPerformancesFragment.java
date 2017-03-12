@@ -12,13 +12,24 @@ import android.view.ViewGroup;
  * Created by chris on 12/3/17.
  */
 public class ArtistPerformancesFragment extends android.support.v4.app.Fragment {
+    private static final String ARTIST_KEY = "artist";
     RecyclerView mRecyclerView;
     ArtistPerformancesAdapter mPerformancesAdapter;
+    Artist mArtist;
+
+    public static ArtistPerformancesFragment newInstance(Artist artist) {
+        ArtistPerformancesFragment fragment = new ArtistPerformancesFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_KEY, "8A3BD8E6-D119-79DD-7CBA-69F343E8A654");
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.artist_performances, container, false);
+        mArtist = ArtistRepo.getArtist(getArguments().getString(ARTIST_KEY));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
 
@@ -26,7 +37,7 @@ public class ArtistPerformancesFragment extends android.support.v4.app.Fragment 
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mPerformancesAdapter = new ArtistPerformancesAdapter(PerformanceRepo.getPerformancesForDay(Performance.FRIDAY));
+        mPerformancesAdapter = new ArtistPerformancesAdapter(PerformanceRepo.getPerformancesForArtist(mArtist));
         mRecyclerView.setAdapter(mPerformancesAdapter);
 
         listPerformances();

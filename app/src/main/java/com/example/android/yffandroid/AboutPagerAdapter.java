@@ -28,7 +28,7 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return SummaryFragment.newInstance(artist);
             default:
-                return new ArtistPerformancesFragment();
+                return ArtistPerformancesFragment.newInstance(artist);
         }
     }
 
