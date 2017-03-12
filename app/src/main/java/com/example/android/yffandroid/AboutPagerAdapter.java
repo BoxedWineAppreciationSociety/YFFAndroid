@@ -28,4 +28,14 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return 2;
     }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch(position) {
+            case 0:
+                return "About";
+            default:
+                return "Performances";
+        }
+    }
 }
