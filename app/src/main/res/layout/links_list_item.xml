@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <com.example.android.yffandroid.SocialButton
+        android:id="@+id/social_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="16dp"
+        android:onClick="socialButtonClicked"
+        android:background="@drawable/social_button_olive"/>
+
+</LinearLayout>
