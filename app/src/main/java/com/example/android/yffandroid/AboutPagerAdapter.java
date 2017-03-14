@@ -12,6 +12,9 @@ import android.support.v4.view.PagerAdapter;
  * Created by chris on 12/3/17.
  */
 public class AboutPagerAdapter extends FragmentPagerAdapter {
+    final int PAGE_COUNT = 2;
+    private String tabTitles[] = new String[] { "About", "Performances" };
+
     Context context;
     Artist mArtist;
 
@@ -34,16 +37,11 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return PAGE_COUNT;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch(position) {
-            case 0:
-                return "About";
-            default:
-                return "Performances";
-        }
+        return tabTitles[position];
     }
 }
