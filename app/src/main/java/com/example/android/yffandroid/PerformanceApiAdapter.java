@@ -29,12 +29,12 @@ public class PerformanceApiAdapter {
 
     public static final String TAG = "PerformanceApiAdapter";
 
-    public List<Map<String, String>> getPerformanceMaps(int day) {
+    public static List<Map<String, String>> getPerformanceMaps(int day) {
         List<Map<String, String>> performanceMaps = new ArrayList<>();
 
         try {
             String performanceResponse = getApiResponse(day);
-            performanceMaps = getPerformanceMapsFromResponse(performanceMaps, performanceResponse);
+            performanceMaps = getPerformanceMapsFromResponse(performanceResponse);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -42,7 +42,7 @@ public class PerformanceApiAdapter {
         return performanceMaps;
     }
 
-    private String getApiResponse(int day) throws IOException {
+    private static String getApiResponse(int day) throws IOException {
         URL performancesURL = PerformanceApiAdapter.buildUrl(day);
         String performancesResponse = null;
         performancesResponse = PerformanceApiAdapter.getResponseFromHttpUrl(performancesURL);
@@ -74,21 +74,24 @@ public class PerformanceApiAdapter {
     }
 
 
-    private List<Map<String, String>> getPerformanceMapsFromResponse(List<Map<String, String>> performanceMaps, String performanceResponse) throws JSONException {
+    public static List<Map<String, String>> getPerformanceMapsFromResponse(String performanceResponse) throws JSONException {
         JSONArray performancesJSONArray = getPerformancesJSONArray(performanceResponse);
-        performanceMaps = getPerformanceMapsFromJSONArray(performancesJSONArray);
-        return performanceMaps;
+        return getPerformanceMapsFromJSONArray(performancesJSONArray);
     }
 
-    private JSONArray getPerformancesJSONArray(String performancesResponse) throws JSONException {
-        JSONArray performancesJSONArray = null;
+    private static JSONArray getPerformancesJSONArray(String performancesResponse) throws JSONException {
+        if (performancesResponse == null || performancesResponse.length() < 1) {
+            return new JSONArray();
+        }
+
+        JSONArray performancesJSONArray;
         JSONObject responseJSON = new JSONObject(performancesResponse);
         Log.d(TAG, responseJSON.toString());
         performancesJSONArray = responseJSON.getJSONArray("performances");
         return performancesJSONArray;
     }
 
-    private List<Map<String,String>> getPerformanceMapsFromJSONArray(JSONArray performancesJSONArray) throws JSONException {
+    private static List<Map<String,String>> getPerformanceMapsFromJSONArray(JSONArray performancesJSONArray) throws JSONException {
         ArrayList<Map<String,String>> performances = new ArrayList<>();
 
         int performancesJSONlength = performancesJSONArray.length();
@@ -107,7 +110,7 @@ public class PerformanceApiAdapter {
     }
 
     @NonNull
-    private Map getPerformanceMapFromJSON(JSONObject performanceJSON) {
+    private static Map getPerformanceMapFromJSON(JSONObject performanceJSON) {
         Map performance = new HashMap();
         for (Map.Entry<String,String> entry : performanceJSONMapping()) {
             String value = performanceJSON.optString(entry.getKey());

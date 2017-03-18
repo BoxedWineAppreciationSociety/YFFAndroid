@@ -38,7 +38,7 @@ public class ProgramFragment extends android.support.v4.app.Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PerformanceRepo.initLocalPerformances();
+        PerformanceRepo.initLocalPerformances(getContext());
     }
 
     @Nullable

@@ -31,7 +31,6 @@ public class ArtistsListFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArtistRepo.initLocalArtists();
     }
 
     @Nullable
