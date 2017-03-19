@@ -1,13 +1,11 @@
 package com.example.android.yffandroid;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +20,10 @@ public class ArtistRepo extends Repo {
     private static final String TAG = "ArtistRepo";
     private static List<Artist> mLoadedArtists = new LinkedList<>();
     private static List<Artist> mLocalArtists = new LinkedList<>();
+
+    public static void fetchData(fetchDataWatcher watcher) {
+        new FetchArtistsTask(watcher).execute();
+    }
 
     public static void initLocalArtists(Context ctxt) {
         String jsonString = loadJSONFromAsset(ctxt, "artists_local.json");
@@ -54,9 +56,12 @@ public class ArtistRepo extends Repo {
         Artist artist;
         if (mLoadedArtists.size() >= 1) {
             artist = getLoadedArtist(artistID);
-        } else {
-            artist = getLocalArtist(artistID);
+            if (artist != null) {
+                return artist;
+            }
         }
+
+        artist = getLocalArtist(artistID);
 
         if (artist != null) {
             return artist;
@@ -106,5 +111,26 @@ public class ArtistRepo extends Repo {
         }
 
         return artists;
+    }
+
+    public static class FetchArtistsTask extends AsyncTask<Void, Void, Void> {
+        fetchDataWatcher watcher;
+
+        public FetchArtistsTask(fetchDataWatcher watcher) {
+            this.watcher = watcher;
+        }
+
+        @Override
+        protected Void doInBackground (Void... params) {
+            ArtistRepo.loadArtists();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Can I de-duplicate the listing logic?
+            mLoadedArtists = ArtistRepo.getArtists();
+            watcher.onDataFetched();
+        }
     }
 }

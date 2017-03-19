@@ -23,9 +23,9 @@ import java.util.Set;
  * Created by chris on 2/3/17.
  */
 public class PerformanceApiAdapter {
-    public static final String FRI_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/fri_performances_remote.json";
-    public static final String SAT_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/sat_performances_remote.json";
-    public static final String SUN_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/sun_performances_remote.json";
+    public static final String FRI_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/staging/fri_performances_remote.json";
+    public static final String SAT_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/staging/sat_performances_remote.json";
+    public static final String SUN_PERFORMANCES_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/staging/sun_performances_remote.json";
 
     public static final String TAG = "PerformanceApiAdapter";
 

@@ -9,7 +9,7 @@ import java.io.InputStream;
  * Created by chris on 19/3/17.
  */
 
-public class Repo {
+public abstract class Repo {
 
     public static String loadJSONFromAsset(Context ctxt, String filename) {
         String json;
@@ -25,5 +25,9 @@ public class Repo {
             return null;
         }
         return json;
+    }
+
+    interface fetchDataWatcher {
+        void onDataFetched();
     }
 }

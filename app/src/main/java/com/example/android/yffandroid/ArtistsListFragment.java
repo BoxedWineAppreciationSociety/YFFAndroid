@@ -3,7 +3,6 @@ package com.example.android.yffandroid;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,12 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.ref.WeakReference;
 import java.util.Collections;
 import java.util.List;
 
 public class ArtistsListFragment extends Fragment
-        implements ArtistListAdapter.ArtistAdapterOnClickHandler {
+        implements ArtistListAdapter.ArtistAdapterOnClickHandler, ArtistRepo.fetchDataWatcher {
     private RecyclerView mRecyclerView;
     private ArtistListAdapter mArtistListAdapter;
 
@@ -65,34 +63,14 @@ public class ArtistsListFragment extends Fragment
         startActivity(intentToStartActivity);
     }
 
-    public static class FetchArtistsTask extends AsyncTask<Void, Void, Void> {
-        WeakReference<ArtistListAdapter> artistListAdapterWeakReference;
-
-        public FetchArtistsTask(ArtistListAdapter artistListAdapter) {
-            this.artistListAdapterWeakReference = new WeakReference<>(artistListAdapter);
-        }
-
-        @Override
-        protected Void doInBackground (Void... params) {
-            ArtistRepo.loadArtists();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            // Can I de-duplicate the listing logic?
-            List<Artist> artists = ArtistRepo.getArtists();
-            Collections.sort(artists);
-            ArtistListAdapter artistListAdapter = artistListAdapterWeakReference.get();
-            if (artistListAdapter != null) {
-                artistListAdapter.setArtistData(artists);
-            }
-        }
+    @Override
+    public void onDataFetched() {
+        listArtists();
     }
 
     private void fetchArtists() {
         Log.d(TAG, "Listing Artists");
-        new FetchArtistsTask(mArtistListAdapter).execute();
+        ArtistRepo.fetchData(this);
     }
 
     private void listArtists() {

@@ -1,6 +1,7 @@
 package com.example.android.yffandroid;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONException;
@@ -21,6 +22,10 @@ public class PerformanceRepo extends Repo {
     private static List<Performance> mLocalPerformancesFriday = new LinkedList<>();
     private static List<Performance> mLocalPerformancesSaturday = new LinkedList<>();
     private static List<Performance> mLocalPerformancesSunday = new LinkedList<>();
+
+    public static void fetchData(fetchDataWatcher watcher) {
+        new FetchPerformancesTask(watcher).execute();
+    }
 
     public static void initLocalPerformances(Context ctxt) {
         String jsonStringFri = loadJSONFromAsset(ctxt, "fri_performances_local.json");
@@ -121,5 +126,25 @@ public class PerformanceRepo extends Repo {
         allLoaded.addAll(mLoadedPerformancesSaturday);
         allLoaded.addAll(mLoadedPerformancesSunday);
         return allLoaded;
+    }
+
+
+    public static class FetchPerformancesTask extends AsyncTask<Void, Void, Void> {
+        fetchDataWatcher watcher;
+
+        public FetchPerformancesTask(fetchDataWatcher watcher) {
+            this.watcher = watcher;
+        }
+
+        @Override
+        protected Void doInBackground (Void... params) {
+            PerformanceRepo.loadPerformances();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            watcher.onDataFetched();
+        }
     }
 }
