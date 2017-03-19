@@ -24,7 +24,7 @@ import java.util.Set;
  */
 
 public class ArtistApiAdapter {
-    public static final String ARTISTS_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/artists_remote.json";
+    public static final String ARTISTS_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/staging/artists_remote.json";
     public static final String TAG = "ArtistApiAdapter";
 
     public static URL buildUrl() {
