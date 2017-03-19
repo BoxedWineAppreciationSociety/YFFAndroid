@@ -7,6 +7,8 @@
     <color name="colorYFFTextPrimary">#352B1F</color>
 
     <color name="colorYFFOlive">#9A9B52</color>
+    <color name="colorYFFRed">#C7563D</color>
+
     <!--TODO: Get actual colors -->
     <color name="colorFacebookBlue">#0000ff</color>
     <color name="colorYoutubeRed">#ff0000</color>

@@ -49,7 +49,7 @@ public class ArtistsListFragment extends Fragment
 
         listArtists();
         fetchArtists();
-        setActionBarColor();
+        setupActionBar();
 
         return rootView;
     }
@@ -79,7 +79,7 @@ public class ArtistsListFragment extends Fragment
         mArtistListAdapter.setArtistData(artists);
     }
 
-    private void setActionBarColor() {
+    private void setupActionBar() {
         ActionBar artistsActivityActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         artistsActivityActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFOlive)));
 

@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -64,6 +65,7 @@ public class ProgramFragment extends android.support.v4.app.Fragment
 
         styleSelectedButton(mFriButton);
         PerformanceRepo.fetchData(this);
+        setupActionBar();
         return rootView;
     }
 
@@ -117,5 +119,13 @@ public class ProgramFragment extends android.support.v4.app.Fragment
     @Override
     public void onDataFetched() {
         listPerformances(Performance.FRIDAY);
+    }
+
+
+    private void setupActionBar() {
+        ActionBar programActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        programActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFRed)));
+
+        programActionBar.setTitle("Program");
     }
 }
