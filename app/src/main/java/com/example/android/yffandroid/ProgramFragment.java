@@ -26,7 +26,7 @@ import static android.R.color.black;
  */
 
 public class ProgramFragment extends android.support.v4.app.Fragment
-    implements  ProgramAdapter.ProgramAdapterOnClickHandler, View.OnClickListener {
+    implements  ProgramAdapter.ProgramAdapterOnClickHandler, View.OnClickListener, PerformanceRepo.fetchDataWatcher {
     private RecyclerView mRecyclerView;
     private ProgramAdapter mProgramAdapter;
     private Button mFriButton;
@@ -38,7 +38,7 @@ public class ProgramFragment extends android.support.v4.app.Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PerformanceRepo.initLocalPerformances();
+        PerformanceRepo.initLocalPerformances(getContext());
     }
 
     @Nullable
@@ -63,8 +63,7 @@ public class ProgramFragment extends android.support.v4.app.Fragment
         mSunButton.setOnClickListener(this);
 
         styleSelectedButton(mFriButton);
-        listPerformances(Performance.SATURDAY);
-        fetchPerformances(Performance.SUNDAY);
+        PerformanceRepo.fetchData(this);
         return rootView;
     }
 
@@ -87,12 +86,6 @@ public class ProgramFragment extends android.support.v4.app.Fragment
         mProgramAdapter.setPerformanceData(performances);
     }
 
-    private void fetchPerformances(int day) {
-        Log.d(TAG, "Fetching Performances");
-        int[] params = { day };
-        new FetchPerformancesTask(mProgramAdapter).execute(params);
-    }
-
     @Override
     public void onClick(View v) {
         unSelectAllButtons();
@@ -103,13 +96,13 @@ public class ProgramFragment extends android.support.v4.app.Fragment
         styleSelectedButton(v);
         switch (v.getId()) {
             case R.id.btn_friday:
-                fetchPerformances(Performance.FRIDAY);
+                mProgramAdapter.setPerformanceData(PerformanceRepo.getPerformancesForDay(Performance.FRIDAY));
                 break;
             case R.id.btn_saturday:
-                fetchPerformances(Performance.SATURDAY);
+                mProgramAdapter.setPerformanceData(PerformanceRepo.getPerformancesForDay(Performance.SATURDAY));
                 break;
             case R.id.btn_sunday:
-                fetchPerformances(Performance.SUNDAY);
+                mProgramAdapter.setPerformanceData(PerformanceRepo.getPerformancesForDay(Performance.SUNDAY));
                 break;
 
         }
@@ -121,33 +114,8 @@ public class ProgramFragment extends android.support.v4.app.Fragment
         mSunButton.setTextColor(getResources().getColor(black));
     }
 
-    public static class FetchPerformancesTask extends AsyncTask<int[], Void, int[]> {
-        WeakReference<ProgramAdapter> programAdapterWeakReference;
-
-        public FetchPerformancesTask(ProgramAdapter artistListAdapter) {
-            this.programAdapterWeakReference = new WeakReference<>(artistListAdapter);
-        }
-
-        @Override
-        protected int[] doInBackground(int[]... params) {
-            Log.d(TAG, "Do in background");
-            PerformanceRepo.loadPerformances();
-            Log.d(TAG, "Performances loaded");
-
-            return params[0];
-        }
-
-        @Override
-        protected void onPostExecute(int[] days) {
-            int day = days[0];
-            // Can I de-duplicate the listing logic?
-            List<Performance> performances = PerformanceRepo.getPerformancesForDay(day);
-            Log.d(TAG, "onPostExecute" + String.valueOf(performances));
-//            Collections.sort(performances);
-            ProgramAdapter programAdapter = programAdapterWeakReference.get();
-            if (programAdapter != null) {
-                programAdapter.setPerformanceData(performances);
-            }
-        }
+    @Override
+    public void onDataFetched() {
+        listPerformances(Performance.FRIDAY);
     }
 }

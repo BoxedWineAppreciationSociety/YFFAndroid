@@ -1,24 +1,42 @@
 package com.example.android.yffandroid;
 
+import android.content.Context;
+import android.os.AsyncTask;
+import android.support.annotation.Nullable;
+
+import org.json.JSONException;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by chris on 1/2/17.
  */
 
-public class ArtistRepo {
+public class ArtistRepo extends Repo {
     private static final String TAG = "ArtistRepo";
     private static List<Artist> mLoadedArtists = new LinkedList<>();
     private static List<Artist> mLocalArtists = new LinkedList<>();
 
-    public static void initLocalArtists() {
-        List<Artist> localArtists = new LinkedList<>();
-        localArtists.add(new Artist("123", "Avril Lavigne"));
-        localArtists.add(new Artist("456", "Slipknot"));
-        localArtists.add(new Artist("789", "Slayer"));
-        mLocalArtists = localArtists;
+    public static void fetchData(fetchDataWatcher watcher) {
+        new FetchArtistsTask(watcher).execute();
+    }
+
+    public static void initLocalArtists(Context ctxt) {
+        String jsonString = loadJSONFromAsset(ctxt, "artists_local.json");
+        List<Map<String, String>> artistMaps = null;
+
+        try {
+            artistMaps = ArtistApiAdapter.getArtistMapsFromResponse(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (artistMaps != null) {
+            mLocalArtists = artistsFromMapList(artistMaps);
+        }
     }
 
     public static void loadArtists() {
@@ -35,14 +53,41 @@ public class ArtistRepo {
     }
 
     public static Artist getArtist(String artistID) {
-        for (int i = 0; i < mLoadedArtists.size(); i++) {
-            Artist artist = mLoadedArtists.get(i);
-            if (artist.getId().equals(artistID)) {
+        Artist artist;
+        if (mLoadedArtists.size() >= 1) {
+            artist = getLoadedArtist(artistID);
+            if (artist != null) {
                 return artist;
             }
         }
 
-        return new Artist("9B45ACB9-9656-080A-EB5A-90350C70CDA5", "COULD NOT FIND ARTIST");
+        artist = getLocalArtist(artistID);
+
+        if (artist != null) {
+            return artist;
+        } else {
+            return new Artist("9B45ACB9-9656-080A-EB5A-90350C70CDA5", "COULD NOT FIND ARTIST");
+        }
+    }
+
+    @Nullable
+    private static Artist getLocalArtist(String artistID) {
+        return findArtistInList(artistID, mLocalArtists);
+    }
+
+    @Nullable
+    private static Artist getLoadedArtist(String artistID) {
+        return findArtistInList(artistID, mLocalArtists);
+    }
+
+    private static Artist findArtistInList(String artistID, List<Artist> list) {
+        for (int i = 0; i < list.size(); i++) {
+            Artist artist = list.get(i);
+            if (artist.getId().equals(artistID)) {
+                return artist;
+            }
+        }
+        return null;
     }
 
     public static List<Artist> artistsFromMapList(List<Map<String, String>> artistMaps) {
@@ -66,5 +111,26 @@ public class ArtistRepo {
         }
 
         return artists;
+    }
+
+    public static class FetchArtistsTask extends AsyncTask<Void, Void, Void> {
+        fetchDataWatcher watcher;
+
+        public FetchArtistsTask(fetchDataWatcher watcher) {
+            this.watcher = watcher;
+        }
+
+        @Override
+        protected Void doInBackground (Void... params) {
+            ArtistRepo.loadArtists();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            // Can I de-duplicate the listing logic?
+            mLoadedArtists = ArtistRepo.getArtists();
+            watcher.onDataFetched();
+        }
     }
 }

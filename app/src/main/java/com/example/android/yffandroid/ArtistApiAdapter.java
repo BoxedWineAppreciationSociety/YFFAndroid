@@ -24,7 +24,7 @@ import java.util.Set;
  */
 
 public class ArtistApiAdapter {
-    public static final String ARTISTS_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/artists_remote.json";
+    public static final String ARTISTS_URL = "https://raw.githubusercontent.com/RustComet/YFFJSON/master/staging/artists_remote.json";
     public static final String TAG = "ArtistApiAdapter";
 
     public static URL buildUrl() {
@@ -44,7 +44,7 @@ public class ArtistApiAdapter {
 
         try {
             String artistsResponse = getApiResponse();
-            artistMaps = getArtistMapsFromResponse(artistMaps, artistsResponse);
+            artistMaps = getArtistMapsFromResponse(artistsResponse);
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
@@ -52,13 +52,13 @@ public class ArtistApiAdapter {
         return artistMaps;
     }
 
-    private List<Map<String, String>> getArtistMapsFromResponse(List<Map<String, String>> artistMaps, String artistsResponse) throws JSONException {
+    public static List<Map<String, String>> getArtistMapsFromResponse(String artistsResponse) throws JSONException {
         JSONArray artistsJSONArray = getArtistsJSONArray(artistsResponse);
-        artistMaps = getArtistMapsFromJSONArray(artistsJSONArray);
+        List<Map<String, String>> artistMaps = getArtistMapsFromJSONArray(artistsJSONArray);
         return artistMaps;
     }
 
-    private List<Map<String,String>> getArtistMapsFromJSONArray(JSONArray artistsJSONArray) throws JSONException {
+    public static List<Map<String,String>> getArtistMapsFromJSONArray(JSONArray artistsJSONArray) throws JSONException {
         ArrayList<Map<String,String>> artists = new ArrayList<>();
 
         int artistsJSONlength = artistsJSONArray.length();
@@ -77,7 +77,7 @@ public class ArtistApiAdapter {
     }
 
     @NonNull
-    private Map getArtistMapFromJSON(JSONObject artistJSON) {
+    public static Map getArtistMapFromJSON(JSONObject artistJSON) {
         Map artist = new HashMap();
         for (Map.Entry<String,String> entry : artistJSONMapping()) {
             String value = artistJSON.optString(entry.getKey());
@@ -108,7 +108,7 @@ public class ArtistApiAdapter {
         return attributeMappings.entrySet();
     }
 
-    private JSONArray getArtistsJSONArray(String artistsResponse) throws JSONException {
+    public static JSONArray getArtistsJSONArray(String artistsResponse) throws JSONException {
         JSONArray artistsJSONArray = null;
         JSONObject responseJSON = new JSONObject(artistsResponse);
         Log.d(TAG, responseJSON.toString());
