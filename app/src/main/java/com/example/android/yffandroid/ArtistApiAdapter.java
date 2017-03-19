@@ -104,6 +104,7 @@ public class ArtistApiAdapter {
         attributeMappings.put("twitter", "twitter");
         attributeMappings.put("instagram", "instagram");
         attributeMappings.put("website", "website");
+        attributeMappings.put("image_name", "image_name");
 
         return attributeMappings.entrySet();
     }

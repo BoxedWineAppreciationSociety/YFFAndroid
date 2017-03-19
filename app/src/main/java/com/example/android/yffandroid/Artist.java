@@ -1,10 +1,17 @@
 package com.example.android.yffandroid;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+
 /**
  * Created by chris on 1/2/17.
  */
 
 public class Artist implements Comparable<Artist> {
+    private static final String ARTIST_IMAGE_PREFIX = "artist_image_";
+    private static final int PLACEHOLDER_IMAGE_ID = R.drawable.fake_placeholder;
     public String id;
     public String name;
     public String about;
@@ -15,6 +22,9 @@ public class Artist implements Comparable<Artist> {
     public String twitterUrl;
     public String instagramUrl;
     public String websiteUrl;
+
+
+    public String imageName;
 
     public Artist(String id, String name) {
         // Can this use the other constructor?
@@ -49,8 +59,10 @@ public class Artist implements Comparable<Artist> {
 
     public String getFacebookUrl() { return facebookUrl; }
 
-
     public String getWebsiteUrl() { return websiteUrl; }
+
+    public String getImageName() { return imageName; }
+
 
     public void setAbout(String about) { this.about = about; }
 
@@ -68,9 +80,33 @@ public class Artist implements Comparable<Artist> {
 
     public void setWebsiteUrl(String websiteUrl) { this.websiteUrl = websiteUrl; }
 
+    public void setImageName(String imageName) { this.imageName = imageName; }
+
     @Override
     public int compareTo(Artist otherArtist) {
         return getName().compareTo(otherArtist.getName());
     }
 
+    public Drawable getArtistDrawable(Context context) {
+        Resources res = context.getResources();
+        String imageName = drawableName();
+        if (imageName != null && !imageName.equals("")) {
+            int resID = res.getIdentifier(imageName, "drawable", context.getPackageName());
+            if (resID != 0) {
+                return ContextCompat.getDrawable(context, resID);
+            }
+        }
+        return getPlaceholderImage(context);
+    }
+
+    private Drawable getPlaceholderImage(Context context) {
+        return ContextCompat.getDrawable(context, PLACEHOLDER_IMAGE_ID);
+    }
+
+    private String drawableName() {
+        String iName = getImageName();
+        if (iName.length() == 0) return "";
+
+        return ARTIST_IMAGE_PREFIX + iName.toLowerCase();
+    }
 }

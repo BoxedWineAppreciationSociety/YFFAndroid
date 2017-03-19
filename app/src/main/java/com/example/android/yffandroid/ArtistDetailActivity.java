@@ -4,15 +4,18 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ArtistDetailActivity extends AppCompatActivity {
     private TextView mArtistNameTextView;
+    private ImageView mArtistImageView;
     private Artist mArtist;
     private static final String TAG = "ArtistDetailActivity";
 
@@ -23,6 +26,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_artist_detail);
 
         mArtistNameTextView = (TextView) findViewById(R.id.tv_artist_name);
+        mArtistImageView = (ImageView) findViewById(R.id.artist_image);
         mArtist = getArtistFromExtra();
 
         displayArtist();
@@ -43,6 +47,19 @@ public class ArtistDetailActivity extends AppCompatActivity {
     private void displayArtist() {
         if (mArtist == null) { return; }
 
+        setArtistText();
+        setArtistImage();
+    }
+
+    private void setArtistImage() {
+        Drawable drawable = mArtist.getArtistDrawable(this);
+
+        if (drawable != null) {
+            mArtistImageView.setImageDrawable(drawable);
+        }
+    }
+
+    private void setArtistText() {
         mArtistNameTextView.setText(mArtist.getName());
     }
 
