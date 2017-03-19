@@ -106,6 +106,7 @@ public class ArtistRepo extends Repo {
             newArtist.setTwitterUrl(artistMap.get("twitter").toString());
             newArtist.setInstagramUrl(artistMap.get("instagram").toString());
             newArtist.setWebsiteUrl(artistMap.get("website").toString());
+            newArtist.setImageName(artistMap.get("image_name").toString());
 
             artists.add(newArtist);
         }
