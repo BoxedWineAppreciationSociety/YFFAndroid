@@ -40,6 +40,11 @@ public class ArtistPerformancesAdapter extends RecyclerView.Adapter<ArtistPerfor
         return mPerformances.size();
     }
 
+    public void setPerformanceData(List<Performance> performanceData) {
+        this.mPerformances = performanceData;
+        notifyDataSetChanged();
+    }
+
     public class ArtistPerformancesAdapterViewHolder extends RecyclerView.ViewHolder {
         Performance mPerformance;
         TextView mPerformanceTime;

@@ -8,10 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Created by chris on 12/3/17.
  */
-public class ArtistPerformancesFragment extends android.support.v4.app.Fragment {
+public class ArtistPerformancesFragment extends android.support.v4.app.Fragment
+        implements Repo.fetchDataWatcher {
     private static final String ARTIST_KEY = "artist";
     RecyclerView mRecyclerView;
     ArtistPerformancesAdapter mPerformancesAdapter;
@@ -40,16 +44,22 @@ public class ArtistPerformancesFragment extends android.support.v4.app.Fragment 
         mPerformancesAdapter = new ArtistPerformancesAdapter(PerformanceRepo.getPerformancesForArtist(mArtist));
         mRecyclerView.setAdapter(mPerformancesAdapter);
 
-        listPerformances();
         fetchPerformances();
 
         return rootView;
     }
 
     private void fetchPerformances() {
+        PerformanceRepo.fetchData(this);
+    }
 
+    @Override
+    public void onDataFetched() {
+        listPerformances();
     }
 
     private void listPerformances() {
+        List<Performance> performances = PerformanceRepo.getPerformancesForArtist(mArtist);
+        mPerformancesAdapter.setPerformanceData(performances);
     }
 }

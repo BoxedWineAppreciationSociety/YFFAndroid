@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         ArtistRepo.initLocalArtists(this);
+        PerformanceRepo.initLocalPerformances(this);
     }
 
     @Override
