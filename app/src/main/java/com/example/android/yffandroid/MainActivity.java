@@ -1,6 +1,7 @@
 package com.example.android.yffandroid;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity
         implements DrawerAdapter.DrawerAdapterOnClickHandler {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
 
-        drawerLayout.setDrawerListener(toggle);
+        drawerLayout.addDrawerListener(toggle);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -56,6 +58,20 @@ public class MainActivity extends AppCompatActivity
         toggle.onOptionsItemSelected(item);
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        toggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        toggle.onConfigurationChanged(newConfig);
+    }
+
 
     @Override
     public void onClick(int position) {
@@ -97,7 +113,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showViewPager() {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        PagerFragment fragment = PagerFragment.newInstance(true);
+        PagerFragment fragment = PagerFragment.newInstance();
         transaction.replace(R.id.content_fragment, fragment);
         transaction.commit();
     }

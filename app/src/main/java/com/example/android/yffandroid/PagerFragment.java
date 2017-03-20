@@ -21,11 +21,8 @@ public class PagerFragment extends android.support.v4.app.Fragment {
     private TabLayout mTabLayout;
     private static final String NESTED_KEY = "nested_key";
 
-    public static PagerFragment newInstance(boolean nested) {
+    public static PagerFragment newInstance() {
         PagerFragment pagerFragment = new PagerFragment();
-        Bundle args = new Bundle();
-        args.putBoolean(NESTED_KEY, nested);
-        pagerFragment.setArguments(args);
         return pagerFragment;
     }
 
@@ -34,10 +31,6 @@ public class PagerFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
         ViewPager pager = (ViewPager) rootView.findViewById(R.id.summary_pager);
-        Bundle args = getArguments();
-        boolean nested = false;
-        if (args != null) nested = args.getBoolean(NESTED_KEY);
-        ViewCompat.setNestedScrollingEnabled(pager, nested);
         mArtist = ArtistRepo.getArtist("0062ac2f-cbf7-46e7-bfac-46bba2d8f8e4");
 
         pager.setAdapter(buildAdapter());
