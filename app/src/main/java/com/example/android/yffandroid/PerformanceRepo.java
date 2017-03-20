@@ -104,7 +104,7 @@ public class PerformanceRepo extends Repo {
 
     public static List<Performance> getPerformancesForArtist(Artist artist) {
         if (getAllLoaded().size() < 1) {
-            return mLocalPerformancesSunday;
+            return filteredByArtist(getAllLocal(), artist);
         } else {
             return filteredByArtist(getAllLoaded(), artist);
         }
@@ -125,6 +125,14 @@ public class PerformanceRepo extends Repo {
         allLoaded.addAll(mLoadedPerformancesFriday);
         allLoaded.addAll(mLoadedPerformancesSaturday);
         allLoaded.addAll(mLoadedPerformancesSunday);
+        return allLoaded;
+    }
+
+    public static List<Performance> getAllLocal() {
+        List<Performance> allLoaded = new LinkedList<>();
+        allLoaded.addAll(mLocalPerformancesFriday);
+        allLoaded.addAll(mLocalPerformancesSaturday);
+        allLoaded.addAll(mLocalPerformancesSunday);
         return allLoaded;
     }
 
