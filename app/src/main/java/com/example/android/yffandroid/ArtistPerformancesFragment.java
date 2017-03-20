@@ -20,7 +20,7 @@ public class ArtistPerformancesFragment extends android.support.v4.app.Fragment 
     public static ArtistPerformancesFragment newInstance(Artist artist) {
         ArtistPerformancesFragment fragment = new ArtistPerformancesFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(ARTIST_KEY, "8A3BD8E6-D119-79DD-7CBA-69F343E8A654");
+        bundle.putString(ARTIST_KEY, artist.getId());
         fragment.setArguments(bundle);
         return fragment;
     }
