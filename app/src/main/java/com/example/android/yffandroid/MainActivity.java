@@ -3,7 +3,6 @@ package com.example.android.yffandroid;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -13,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity
         implements DrawerAdapter.DrawerAdapterOnClickHandler {
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         ArtistRepo.initLocalArtists(this);
+        PerformanceRepo.initLocalPerformances(this);
     }
 
     @Override
@@ -85,9 +84,6 @@ public class MainActivity extends AppCompatActivity
             case 2:
                 showArtistList();
                 break;
-            default:
-                showViewPager();
-                break;
         }
         drawerLayout.closeDrawer(Gravity.LEFT);
     }
@@ -109,12 +105,5 @@ public class MainActivity extends AppCompatActivity
     private void showEventMap() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://yackfolkfestival.com/festival-info/map/"));
         startActivity(intent);
-    }
-
-    private void showViewPager() {
-        android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        PagerFragment fragment = PagerFragment.newInstance();
-        transaction.replace(R.id.content_fragment, fragment);
-        transaction.commit();
     }
 }

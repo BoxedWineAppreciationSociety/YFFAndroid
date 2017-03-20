@@ -17,12 +17,15 @@ import android.widget.TextView;
  * Created by chris on 12/3/17.
  */
 public class PagerFragment extends android.support.v4.app.Fragment {
+    private static final String ARTIST_KEY = "artist_key";
     private Artist mArtist;
     private TabLayout mTabLayout;
-    private static final String NESTED_KEY = "nested_key";
 
-    public static PagerFragment newInstance() {
+    public static PagerFragment newInstance(Artist artist) {
         PagerFragment pagerFragment = new PagerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ARTIST_KEY, artist.getId());
+        pagerFragment.setArguments(bundle);
         return pagerFragment;
     }
 
@@ -31,7 +34,8 @@ public class PagerFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
         ViewPager pager = (ViewPager) rootView.findViewById(R.id.summary_pager);
-        mArtist = ArtistRepo.getArtist("0062ac2f-cbf7-46e7-bfac-46bba2d8f8e4");
+
+        mArtist = ArtistRepo.getArtist(getArguments().getString(ARTIST_KEY));
 
         pager.setAdapter(buildAdapter());
 
