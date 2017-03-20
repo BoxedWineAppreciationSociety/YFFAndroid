@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -84,9 +85,13 @@ public class MainActivity extends AppCompatActivity
             case 2:
                 showArtistList();
                 break;
+            case 3:
+                showMorePage();
+                break;
         }
         drawerLayout.closeDrawer(Gravity.LEFT);
     }
+
 
     private void showProgram() {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -105,5 +110,12 @@ public class MainActivity extends AppCompatActivity
     private void showEventMap() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://yackfolkfestival.com/festival-info/map/"));
         startActivity(intent);
+    }
+
+    private void showMorePage() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        MoreFragment fragment = new MoreFragment();
+        transaction.replace(R.id.content_fragment, fragment);
+        transaction.commit();
     }
 }

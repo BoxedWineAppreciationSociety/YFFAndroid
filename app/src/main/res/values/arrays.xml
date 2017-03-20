@@ -7,4 +7,13 @@
         <item>@string/artists_title</item>
         <item>@string/more_title</item>
     </string-array>
+    <string-array name="more_items">
+        <item>@string/festival_info_title</item>
+        <item>@string/buy_tickets_title</item>
+        <item>@string/news_title</item>
+        <item>@string/website_title</item>
+        <item>@string/facebook_title</item>
+        <item>@string/instagram_title</item>
+        <item>@string/twitter_title</item>
+    </string-array>
 </resources>
