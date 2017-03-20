@@ -26,7 +26,7 @@ public class AboutPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
-        Artist artist = ArtistRepo.getArtist("B03982D8-BA81-3B63-1066-54CCAC1D3970");
+        Artist artist = ArtistRepo.getArtist("ece27a39-03b8-4172-8ef0-97b3afd93a31");
         switch(position) {
             case 0:
                 return SummaryFragment.newInstance(artist);

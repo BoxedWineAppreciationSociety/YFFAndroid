@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
     private void showViewPager() {
         android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        PagerFragment fragment = new PagerFragment();
+        PagerFragment fragment = PagerFragment.newInstance(true);
         transaction.replace(R.id.content_fragment, fragment);
         transaction.commit();
     }

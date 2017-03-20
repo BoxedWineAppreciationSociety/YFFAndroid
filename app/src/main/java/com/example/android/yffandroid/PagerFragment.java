@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
@@ -18,13 +19,26 @@ import android.widget.TextView;
 public class PagerFragment extends android.support.v4.app.Fragment {
     private Artist mArtist;
     private TabLayout mTabLayout;
+    private static final String NESTED_KEY = "nested_key";
+
+    public static PagerFragment newInstance(boolean nested) {
+        PagerFragment pagerFragment = new PagerFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(NESTED_KEY, nested);
+        pagerFragment.setArguments(args);
+        return pagerFragment;
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pager_fragment, container, false);
         ViewPager pager = (ViewPager) rootView.findViewById(R.id.summary_pager);
-        mArtist = ArtistRepo.getArtist("C1C8B5F3-6622-C48C-5162-B1234803B3A6");
+        Bundle args = getArguments();
+        boolean nested = false;
+        if (args != null) nested = args.getBoolean(NESTED_KEY);
+        ViewCompat.setNestedScrollingEnabled(pager, nested);
+        mArtist = ArtistRepo.getArtist("0062ac2f-cbf7-46e7-bfac-46bba2d8f8e4");
 
         pager.setAdapter(buildAdapter());
 
