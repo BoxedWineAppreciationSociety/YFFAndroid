@@ -20,15 +20,13 @@ import java.util.List;
  */
 public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.MoreListViewHolder> {
     private static final String PLACEHOLDER_IMAGE_NAME = "program_icon";
-    private final List<TypedArray> mMoreItemsMulti;
-    private String[] mMoreItems;
+    private final List<TypedArray> mMoreItems;
 
     private final MoreListOnClickHandler mClickHandler;
 
-    MoreListAdapter(MoreListOnClickHandler clickHandler, String[] titles, List<TypedArray> list) {
+    MoreListAdapter(MoreListOnClickHandler clickHandler, List<TypedArray> list) {
         mClickHandler = clickHandler;
-        mMoreItems = titles;
-        mMoreItemsMulti = list;
+        mMoreItems = list;
     }
 
     interface MoreListOnClickHandler {
@@ -47,15 +45,15 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.MoreLi
 
     @Override
     public void onBindViewHolder(MoreListViewHolder holder, int position) {
-        String title = mMoreItemsMulti.get(position).getString(0);
-        String imageName = mMoreItemsMulti.get(position).getString(1);
-        String outURL = mMoreItemsMulti.get(position).getString(2);
+        String title = mMoreItems.get(position).getString(0);
+        String imageName = mMoreItems.get(position).getString(1);
+        String outURL = mMoreItems.get(position).getString(2);
         holder.bind(title, imageName, outURL);
     }
 
     @Override
     public int getItemCount() {
-        return mMoreItems.length;
+        return mMoreItems.size();
     }
     
     public class MoreListViewHolder extends RecyclerView.ViewHolder
@@ -87,6 +85,9 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.MoreLi
             if (imageName != null && !imageName.equals("")) {
                 int resID = res.getIdentifier(imageName, "drawable", context.getPackageName());
                 if (resID != 0) {
+                    drawable = ContextCompat.getDrawable(context, resID);
+                } else {
+                    resID = res.getIdentifier(PLACEHOLDER_IMAGE_NAME, "drawable", context.getPackageName());
                     drawable = ContextCompat.getDrawable(context, resID);
                 }
             }

@@ -36,9 +36,8 @@ public class MoreFragment extends Fragment
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        String[] moreRows = getResources().getStringArray(R.array.more_items);
-        List<TypedArray> multiRows = ResourceHelper.getMultiTypedArray(rootView.getContext(), "more_items_multi");
-        mMoreListAdapter = new MoreListAdapter(this, moreRows, multiRows);
+        List<TypedArray> moreRows = ResourceHelper.getMultiTypedArray(rootView.getContext(), "more_items_multi");
+        mMoreListAdapter = new MoreListAdapter(this, moreRows);
         mRecyclerView.setAdapter(mMoreListAdapter);
 
         setupActionBar();
