@@ -126,6 +126,6 @@ public class ProgramFragment extends android.support.v4.app.Fragment
         ActionBar programActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         programActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFRed)));
 
-        programActionBar.setTitle("Program");
+        programActionBar.setTitle(R.string.program_action_title);
     }
 }

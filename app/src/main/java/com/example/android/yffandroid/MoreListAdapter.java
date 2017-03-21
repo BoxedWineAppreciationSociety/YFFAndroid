@@ -1,15 +1,17 @@
 package com.example.android.yffandroid;
 
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -17,13 +19,16 @@ import java.util.List;
  * Created by chris on 21/3/17.
  */
 public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.MoreListViewHolder> {
+    private static final String PLACEHOLDER_IMAGE_NAME = "program_icon";
+    private final List<TypedArray> mMoreItemsMulti;
     private String[] mMoreItems;
 
     private final MoreListOnClickHandler mClickHandler;
 
-    MoreListAdapter(MoreListOnClickHandler clickHandler, String[] titles) {
+    MoreListAdapter(MoreListOnClickHandler clickHandler, String[] titles, List<TypedArray> list) {
         mClickHandler = clickHandler;
         mMoreItems = titles;
+        mMoreItemsMulti = list;
     }
 
     interface MoreListOnClickHandler {
@@ -42,35 +47,57 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.MoreLi
 
     @Override
     public void onBindViewHolder(MoreListViewHolder holder, int position) {
-        String moreTitle = mMoreItems[position];
-        holder.bind(moreTitle);
+        String title = mMoreItemsMulti.get(position).getString(0);
+        String imageName = mMoreItemsMulti.get(position).getString(1);
+        String outURL = mMoreItemsMulti.get(position).getString(2);
+        holder.bind(title, imageName, outURL);
     }
 
     @Override
     public int getItemCount() {
         return mMoreItems.length;
     }
-
+    
     public class MoreListViewHolder extends RecyclerView.ViewHolder
         implements View.OnClickListener {
         TextView mTextView;
+        ImageView mImageView;
+        String outURL;
 
         MoreListViewHolder (View view) {
             super(view);
             mTextView = (TextView) view.findViewById(R.id.tv_more);
+            mImageView = (ImageView) view.findViewById(R.id.icon_more);
             Typeface bebasNeue = Typeface.createFromAsset(view.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
             mTextView.setTypeface(bebasNeue);
             view.setOnClickListener(this);
         }
 
-        void bind(String moreTitle) {
+        void bind(String moreTitle, String imageName, String aURL) {
             mTextView.setText(moreTitle);
+            outURL = aURL;
+
+            setImage(imageName);
+        }
+
+        private void setImage(String imageName) {
+            Resources res = mImageView.getResources();
+            Context context = mImageView.getContext();
+            Drawable drawable = null;
+            if (imageName != null && !imageName.equals("")) {
+                int resID = res.getIdentifier(imageName, "drawable", context.getPackageName());
+                if (resID != 0) {
+                    drawable = ContextCompat.getDrawable(context, resID);
+                }
+            }
+            if (drawable != null) {
+                mImageView.setImageDrawable(drawable);
+            }
         }
 
         @Override
         public void onClick(View v) {
-            int adapterPosition = getAdapterPosition();
-            mClickHandler.onClick(Integer.toString(adapterPosition));
+            mClickHandler.onClick(outURL);
         }
     }
 }

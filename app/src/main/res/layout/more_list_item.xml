@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tv_more"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:textSize="26sp"
-        android:padding="17dp"
-        android:fontFamily="sans-serif"
-        android:textColor="@color/colorYFFTextPrimary"/>
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:id="@+id/icon_more"
+            android:paddingLeft="16sp"
+            android:paddingTop="10sp"
+            android:src="@drawable/festival_info_icon" />
+        <TextView
+            android:id="@+id/tv_more"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:textSize="26sp"
+            android:padding="17dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@color/colorYFFTextPrimary"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorYFFGrey" />
 </LinearLayout>

@@ -16,4 +16,46 @@
         <item>@string/instagram_title</item>
         <item>@string/twitter_title</item>
     </string-array>
+    <string-array name="more_items_multi_0">
+        <item>@string/festival_info_title</item>
+        <item>@string/festival_info_image_name</item>
+        <item>http://yackfolkfestival.com/festival-info/</item>
+    </string-array>
+    <string-array name="more_items_multi_1">
+        <item>@string/buy_tickets_title</item>
+        <item>@string/buy_tickets_image_name</item>
+        <item>http://yackfolkfestival.com/festival-info/tickets/</item>
+    </string-array>
+    <string-array name="more_items_multi_2">
+        <item>@string/news_title</item>
+        <item>@string/news_image_name</item>
+        <item>http://yackfolkfestival.com/festival-info/news/</item>
+    </string-array>
+    <string-array name="more_items_multi_3">
+        <item>@string/website_title</item>
+        <item>@string/website_image_name</item>
+        <item>http://yackfolkfestival.com</item>
+    </string-array>
+    <string-array name="more_items_multi_4">
+        <item>@string/facebook_title</item>
+        <item>@string/facebook_image_name</item>
+        <item>https://www.facebook.com/yackfolkfestival/</item>
+    </string-array>
+    <string-array name="more_items_multi_5">
+        <item>@string/instagram_title</item>
+        <item>@string/instagram_image_name</item>
+        <item>https://www.instagram.com/yackfolkfestival/</item>
+    </string-array>
+    <string-array name="more_items_multi_6">
+        <item>@string/twitter_title</item>
+        <item>@string/twitter_image_name</item>
+        <item>https://twitter.com/yackfolkfest/</item>
+    </string-array>
+    <string name="festival_info_image_name">festival_info_icon</string>
+    <string name="buy_tickets_image_name">buy_tickets_icon</string>
+    <string name="news_image_name">news_icon</string>
+    <string name="website_image_name">website_icon</string>
+    <string name="facebook_image_name">facebook_icon</string>
+    <string name="instagram_image_name">instagram_icon</string>
+    <string name="twitter_image_name">twitter_icon</string>
 </resources>
