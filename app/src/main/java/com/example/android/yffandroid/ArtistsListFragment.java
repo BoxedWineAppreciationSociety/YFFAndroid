@@ -83,6 +83,6 @@ public class ArtistsListFragment extends Fragment
         ActionBar artistsActivityActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         artistsActivityActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFOlive)));
 
-        artistsActivityActionBar.setTitle("Artists");
+        artistsActivityActionBar.setTitle(R.string.artists_action_title);
     }
 }

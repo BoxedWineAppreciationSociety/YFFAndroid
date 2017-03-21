@@ -105,7 +105,7 @@ public class Artist implements Comparable<Artist> {
 
     private String drawableName() {
         String iName = getImageName();
-        if (iName.length() == 0) return "";
+        if (iName == null || iName.length() == 0) return "";
 
         return ARTIST_IMAGE_PREFIX + iName.toLowerCase();
     }

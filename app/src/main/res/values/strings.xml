@@ -19,4 +19,15 @@
     <string name="btn_sunday_text">Sun Mar 26</string>
     <string name="links_header">Links</string>
     <string name="artist_about_header">About</string>
+    <string name="festival_info_title">Festival Info</string>
+    <string name="buy_tickets_title">Buy Tickets</string>
+    <string name="news_title">News</string>
+    <string name="website_title">Our Website</string>
+    <string name="facebook_title">Facebook</string>
+    <string name="instagram_title">Instagram</string>
+    <string name="twitter_title">Twitter</string>
+    <string name="more_action_title">More</string>
+    <string name="artist_action_title">Artist</string>
+    <string name="artists_action_title">Artists</string>
+    <string name="program_action_title">Program</string>
 </resources>

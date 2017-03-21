@@ -83,6 +83,6 @@ public class ArtistDetailActivity extends AppCompatActivity {
         ActionBar artistListActionBar = getSupportActionBar();
         artistListActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.colorYFFOlive)));
 
-        artistListActionBar.setTitle("Artist");
+        artistListActionBar.setTitle(R.string.artist_action_title);
     }
 }
