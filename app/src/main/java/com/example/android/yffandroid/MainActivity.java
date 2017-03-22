@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity
             case 3:
                 showMorePage();
                 break;
+            default:
+                break;
         }
         drawerLayout.closeDrawer(Gravity.LEFT);
     }
