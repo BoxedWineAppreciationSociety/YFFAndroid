@@ -70,7 +70,7 @@ public class ProgramFragment extends android.support.v4.app.Fragment
     }
 
     private void styleSelectedButton(Button dayButton) {
-        int selectedColor = getResources().getColor(R.color.colorAccent);
+        int selectedColor = getResources().getColor(R.color.colorYFFRed);
         dayButton.setTextColor(selectedColor);
     }
 

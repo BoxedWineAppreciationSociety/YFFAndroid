@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         if (getFragmentManager().findFragmentById(R.id.content_fragment) == null) {
-            showArtistList();
+            showProgram();
         }
 
         RecyclerView drawerRV = (RecyclerView) findViewById(R.id.drawer);
