@@ -12,7 +12,9 @@ import android.support.v4.content.ContextCompat;
 public class Artist implements Comparable<Artist> {
     private static final String ARTIST_IMAGE_PREFIX = "artist_image_";
     private static final String ARTIST_THUMB_PREFIX = "artist_thumb_";
-    private static final int PLACEHOLDER_IMAGE_ID = R.drawable.map_icon;
+    private static final int PLACEHOLDER_IMAGE_ID = R.drawable.artist_placeholder;
+    private static final int PLACEHOLDER_THUMB = R.drawable.artist_placeholder_thumb;
+
     public String id;
     public String name;
     public String about;
@@ -109,7 +111,7 @@ public class Artist implements Comparable<Artist> {
                 return resID;
             }
         }
-        return R.drawable.fake_placeholder;
+        return PLACEHOLDER_THUMB;
     }
 
     public Drawable getArtistThumbDrawable(Context context) {
