@@ -1,7 +1,8 @@
+
 {
   "performances": [{
-    "id": "1e2b55cc-eec5-4617-9784-da4c7df99b34",
-    "artistId": "7b5a5b1d-16bd-4ee1-97de-0c848ca8f941",
+    "id": "583c9470-172b-47d8-88ae-9047c29f5c7a",
+    "artistId": "8bf84597-f8a2-419a-bec0-87b3a958fd2d",
     "time": 1490331600,
     "stage": "The Star Hotel"
   }, {
@@ -18,7 +19,12 @@
     "id": "00c2579e-0a97-4e4a-8bd9-75d2028303c1",
     "artistId": "6f5101d4-fbc0-49c2-b7f4-5658c2e1f895",
     "time": 1490340600,
-    "stage": "The Star Hotel"
+    "stage": "The Public Hall"
+  }, {
+    "id": "38ee20af-acb2-4513-b694-007e8747e502",
+    "artistId": "7b5a5b1d-16bd-4ee1-97de-0c848ca8f941",
+    "time": 1490341500,
+    "stage": "The Marquee"
   }, {
     "id": "859b28af-377c-4695-9564-206e3dac5c90",
     "artistId": "99c1fe59-f0d5-4d5c-8f0e-2fea1c727fe5",
