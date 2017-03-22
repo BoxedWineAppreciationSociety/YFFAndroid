@@ -44,7 +44,7 @@ public class SocialLink implements Comparable<SocialLink> {
                 color = R.color.colorYFFOlive;
                 break;
             case FACEBOOK:
-                color = R.color.colorPrimaryDark;
+                color = R.color.colorFacebookBlue;
                 break;
             case YOUTUBE:
                 color = R.color.colorYoutubeRed;

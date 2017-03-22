@@ -10,11 +10,10 @@
     <color name="colorYFFRed">#C7563D</color>
     <color name="colorYFFGreen">#4C8579</color>
 
-    <!--TODO: Get actual colors -->
-    <color name="colorFacebookBlue">#0000ff</color>
-    <color name="colorYoutubeRed">#ff0000</color>
-    <color name="colorTwitterBlue">#0099ff</color>
-    <color name="colorItunesGrey">#666666</color>
-    <color name="colorSoundcloudOrange">#ee5533</color>
-    <color name="colorInstagramBlue">#2266ff</color>
+    <color name="colorFacebookBlue">#3B5B98</color>
+    <color name="colorYoutubeRed">#CD201F</color>
+    <color name="colorTwitterBlue">#59AEEE</color>
+    <color name="colorItunesGrey">#6B6868</color>
+    <color name="colorSoundcloudOrange">#FF3300</color>
+    <color name="colorInstagramBlue">#125688</color>
 </resources>
