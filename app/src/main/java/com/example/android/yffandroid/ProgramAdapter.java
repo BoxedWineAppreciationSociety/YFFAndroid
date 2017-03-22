@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -38,12 +39,14 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
         TextView mArtistNameTextView;
         TextView mPerformanceTimeTextView;
         TextView mVenueName;
+        ImageView mImageView;
         Performance mPerformance;
         Artist mArtist;
 
         ProgramAdapterViewHolder (View view) {
             super(view);
             mArtistNameTextView = (TextView) view.findViewById(R.id.tv_artist_name);
+            mImageView = (ImageView) view.findViewById(R.id.program_image);
             mPerformanceTimeTextView = (TextView) view.findViewById(R.id.tv_performance_time);
             mVenueName = (TextView) view.findViewById(R.id.tv_venue_name);
             Typeface bebasNeue = Typeface.createFromAsset(mArtistNameTextView.getContext().getAssets(), "fonts/BebasNeueRegular.otf");
@@ -60,6 +63,7 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
             mPerformance = performance;
             mArtist = ArtistRepo.getArtist(performance.getArtistId());
             mArtistNameTextView.setText(mArtist.getName());
+            mImageView.setImageDrawable(mArtist.getArtistDrawable(mImageView.getContext()));
             mPerformanceTimeTextView.setText(mPerformance.formattedTime());
             mVenueName.setText(mPerformance.getVenue());
         }
