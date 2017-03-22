@@ -27,6 +27,12 @@ dependencies {
     compile "com.android.support:appcompat-v7:${supportLibrary}"
     compile "com.android.support:recyclerview-v7:${supportLibrary}"
     compile "com.android.support:design:${supportLibrary}"
+
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+//    Mixpanel
+    compile "com.mixpanel.android:mixpanel-android:4.+"
+    compile "com.google.android.gms:play-services:7.5.0+"
+    
     testCompile 'junit:junit:4.12'
 }

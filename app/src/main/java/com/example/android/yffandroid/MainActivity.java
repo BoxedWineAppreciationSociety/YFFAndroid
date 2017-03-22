@@ -14,6 +14,8 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
 public class MainActivity extends AppCompatActivity
         implements DrawerAdapter.DrawerAdapterOnClickHandler {
     private ActionBarDrawerToggle toggle=null;
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setHomeButtonEnabled(true);
         ArtistRepo.initLocalArtists(this);
         PerformanceRepo.initLocalPerformances(this);
+
+        String projectToken = "fae80bc076f11cf15deb0be67d83c74b";
+        MixpanelAPI mixpanel = MixpanelAPI.getInstance(this, projectToken);
     }
 
     @Override
