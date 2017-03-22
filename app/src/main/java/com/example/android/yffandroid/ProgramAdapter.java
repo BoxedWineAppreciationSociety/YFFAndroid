@@ -2,6 +2,7 @@ package com.example.android.yffandroid;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -63,7 +66,9 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
             mPerformance = performance;
             mArtist = ArtistRepo.getArtist(performance.getArtistId());
             mArtistNameTextView.setText(mArtist.getName());
-            mImageView.setImageDrawable(mArtist.getArtistDrawable(mImageView.getContext()));
+            int imageID = mArtist.getArtistThumbId(mImageView.getContext());
+            Picasso.with(mImageView.getContext()).load(imageID).into(mImageView);
+            mImageView.setImageDrawable(mArtist.getArtistThumbDrawable(mImageView.getContext()));
             mPerformanceTimeTextView.setText(mPerformance.formattedTime());
             mVenueName.setText(mPerformance.getVenue());
         }
@@ -84,6 +89,12 @@ public class ProgramAdapter extends RecyclerView.Adapter<ProgramAdapter.ProgramA
     public void onBindViewHolder(ProgramAdapterViewHolder holder, int position) {
         Performance performanceForPosition = mPerformanceData.get(position);
         holder.bind(performanceForPosition);
+    }
+
+    @Override
+    public void onViewRecycled(ProgramAdapterViewHolder holder) {
+        super.onViewRecycled(holder);
+        holder.mImageView.setImageDrawable(null);
     }
 
     @Override
