@@ -5,6 +5,11 @@
     <!-- This permission is necessary in order for app to perform network access. -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Mixpanel permissions-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/yff_launcher"
