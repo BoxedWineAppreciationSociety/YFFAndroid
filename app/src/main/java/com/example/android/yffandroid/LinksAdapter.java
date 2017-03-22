@@ -1,6 +1,7 @@
 package com.example.android.yffandroid;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
@@ -49,15 +50,28 @@ public class LinksAdapter extends RecyclerView.Adapter<LinksAdapter.LinksAdapter
             List<SocialLink> links = mLinks.getSocialLinks();
             Collections.sort(links);
             SocialLink link = links.get(position);
-            mButton.setText(link.getTitle());
-            mButton.setUrl(link.getUrl());
-            int color = mButton.getResources().getColor(link.getColor());
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                StateListDrawable drawable = (StateListDrawable) mButton.getBackground();
-                drawable.setTint(color);
-            } else {
-                mButton.setBackgroundColor(color);
+            int iconId = link.getIcon();
+            if (iconId != 0) {
+                Drawable socialIcon = mButton.getResources().getDrawable(iconId);
+                if (socialIcon != null) {
+                    mButton.setImageDrawable(socialIcon);
+                }
+            }
+
+            mButton.setUrl(link.getUrl());
+
+            int colorId = link.getColor();
+            if (colorId != 0) {
+                int color = mButton.getResources().getColor(colorId);
+                if (color != 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        StateListDrawable drawable = (StateListDrawable) mButton.getBackground();
+                        drawable.setTint(color);
+                    } else {
+                        mButton.setBackgroundColor(color);
+                    }
+                }
             }
         }
     }
