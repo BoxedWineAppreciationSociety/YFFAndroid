@@ -65,8 +65,11 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.DrawerAdap
                 case 2:
                     drawableId = R.drawable.artists_icon;
                     break;
-                default:
+                case 3:
                     drawableId = R.drawable.more_icon;
+                    break;
+                default:
+                    drawableId = R.drawable.love_icon;
                     break;
             }
             return mIconImageView.getResources().getDrawable(drawableId);

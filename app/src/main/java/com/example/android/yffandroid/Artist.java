@@ -11,7 +11,8 @@ import android.support.v4.content.ContextCompat;
 
 public class Artist implements Comparable<Artist> {
     private static final String ARTIST_IMAGE_PREFIX = "artist_image_";
-    private static final int PLACEHOLDER_IMAGE_ID = R.drawable.fake_placeholder;
+    private static final String ARTIST_THUMB_PREFIX = "artist_thumb_";
+    private static final int PLACEHOLDER_IMAGE_ID = R.drawable.map_icon;
     public String id;
     public String name;
     public String about;
@@ -99,6 +100,30 @@ public class Artist implements Comparable<Artist> {
         return getPlaceholderImage(context);
     }
 
+    public int getArtistThumbId(Context context) {
+        Resources res = context.getResources();
+        String imageName = drawableThumbName();
+        if (imageName != null && !imageName.equals("")) {
+            int resID = res.getIdentifier(imageName, "drawable", context.getPackageName());
+            if (resID != 0) {
+                return resID;
+            }
+        }
+        return R.drawable.fake_placeholder;
+    }
+
+    public Drawable getArtistThumbDrawable(Context context) {
+        Resources res = context.getResources();
+        String imageName = drawableThumbName();
+        if (imageName != null && !imageName.equals("")) {
+            int resID = res.getIdentifier(imageName, "drawable", context.getPackageName());
+            if (resID != 0) {
+                return ContextCompat.getDrawable(context, resID);
+            }
+        }
+        return getPlaceholderImage(context);
+    }
+
     private Drawable getPlaceholderImage(Context context) {
         return ContextCompat.getDrawable(context, PLACEHOLDER_IMAGE_ID);
     }
@@ -108,5 +133,12 @@ public class Artist implements Comparable<Artist> {
         if (iName == null || iName.length() == 0) return "";
 
         return ARTIST_IMAGE_PREFIX + iName.toLowerCase();
+    }
+
+    private String drawableThumbName() {
+        String iName = getImageName();
+        if (iName == null || iName.length() == 0) return "";
+
+        return ARTIST_THUMB_PREFIX + iName.toLowerCase();
     }
 }

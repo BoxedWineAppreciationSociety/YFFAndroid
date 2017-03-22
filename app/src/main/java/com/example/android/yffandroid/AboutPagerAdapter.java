@@ -13,7 +13,7 @@ import android.support.v4.view.PagerAdapter;
  */
 public class AboutPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "About", "Performances" };
+    private String tabTitles[] = new String[] { "About", "Playing Times" };
 
     Context context;
     Artist mArtist;

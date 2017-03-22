@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="80sp"
-            android:layout_height="80sp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
             app:srcCompat="@mipmap/yff_launcher"
             android:layout_marginLeft="22dp"
@@ -29,9 +29,10 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
                 android:paddingRight="40dp"
-                android:paddingTop="16dp"
-                android:textSize="22sp"
+                android:paddingTop="20dp"
+                android:textSize="26dp"
                 android:textStyle="bold"
+                android:textColor="@color/colorYFFTextPrimary"
                 android:fontFamily="sans-serif"/>
 
             <TextView
@@ -39,7 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
-                android:textSize="12sp"
+                android:textSize="14dp"
+                android:paddingTop="4dp"
                 android:textColor="@color/colorYFFOlive"
                 android:fontFamily="sans-serif"/>
 
@@ -49,7 +51,8 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
                 android:paddingBottom="16dp"
-                android:textSize="12sp"
+                android:paddingTop="4dp"
+                android:textSize="14dp"
                 android:textColor="@color/colorYFFOlive"
                 android:fontFamily="sans-serif"/>
 
