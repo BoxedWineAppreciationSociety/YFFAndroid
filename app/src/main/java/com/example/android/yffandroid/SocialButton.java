@@ -3,12 +3,13 @@ package com.example.android.yffandroid;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 /**
  * Created by chris on 23/2/17.
  */
 
-public class SocialButton extends Button {
+public class SocialButton extends ImageButton {
     String url;
 
     public SocialButton(Context context, AttributeSet attrs) {

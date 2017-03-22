@@ -18,23 +18,23 @@ public class SocialLink implements Comparable<SocialLink> {
     public static final String WEBSITE = "website";
 
     private final int mColor;
+    private final int mIcon;
     private final String mUrl;
-    private final String mTitle;
 
     public static final String[] socials = {
        WEBSITE, FACEBOOK, YOUTUBE, TWITTER, ITUNES, SOUNDCLOUD, INSTAGRAM
     };
 
     SocialLink() {
-        mTitle = "Link";
         mColor = R.color.colorYFFOlive;
         mUrl = "http://google.com";
+        mIcon =  R.drawable.ic_facebook;
     }
 
     SocialLink(String type, String urlString) {
-        mTitle = titleFor(type);
         mColor = colorFor(type);
         mUrl = urlString;
+        mIcon = iconFor(type);
     }
 
     private static int colorFor(String type) {
@@ -44,7 +44,7 @@ public class SocialLink implements Comparable<SocialLink> {
                 color = R.color.colorYFFOlive;
                 break;
             case FACEBOOK:
-                color = R.color.colorPrimaryDark;
+                color = R.color.colorFacebookBlue;
                 break;
             case YOUTUBE:
                 color = R.color.colorYoutubeRed;
@@ -69,45 +69,44 @@ public class SocialLink implements Comparable<SocialLink> {
         return color;
     }
 
-    // TODO: Icon instead of title
-    private static String titleFor(String type) {
-        String title;
+    private static int iconFor(String type) {
+        int icon;
         switch (type) {
             case WEBSITE:
-                title = "Website";
+                icon = R.drawable.ic_website;
                 break;
             case FACEBOOK:
-                title = "Facebook";
+                icon = R.drawable.ic_facebook;
                 break;
             case YOUTUBE:
-                title = "Youtube";
+                icon = R.drawable.ic_youtube;
                 break;
             case TWITTER:
-                title = "Twitter";
+                icon = R.drawable.ic_twitter;
                 break;
             case ITUNES:
-                title = "iTunes";
+                icon = R.drawable.ic_apple;
                 break;
             case SOUNDCLOUD:
-                title = "Soundcloud";
+                icon = R.drawable.ic_soundcloud;
                 break;
             case INSTAGRAM:
-                title = "Instagram";
+                icon = R.drawable.ic_instagram;
                 break;
             default:
-                title = "Link";
+                icon = R.drawable.ic_website;
                 break;
-
         }
-        return title;
+        return icon;
     }
-
-    public String getTitle() {
-        return mTitle;
-    }
+    
 
     public int getColor() {
         return mColor;
+    }
+
+    public int getIcon() {
+        return mIcon;
     }
 
     public String getUrl() {
