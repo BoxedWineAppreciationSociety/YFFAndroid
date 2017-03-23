@@ -43,6 +43,7 @@ public class MoreListAdapter extends RecyclerView.Adapter<MoreListAdapter.MoreLi
         return new MoreListViewHolder(view);
     }
 
+    @SuppressWarnings("ResourceType")
     @Override
     public void onBindViewHolder(MoreListViewHolder holder, int position) {
         String title = mMoreItems.get(position).getString(0);
