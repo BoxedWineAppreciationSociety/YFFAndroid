@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
-def supportLibrary = "25.1.0"
+def supportLibrary = "27.0.2"
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.yackfolkfestival.android.yffandroid"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -32,7 +32,7 @@ dependencies {
 
 //    Mixpanel
     compile "com.mixpanel.android:mixpanel-android:4.+"
-    compile "com.google.android.gms:play-services:7.5.0+"
+    compile "com.google.android.gms:play-services:11.8.0"
     
     testCompile 'junit:junit:4.12'
 }
