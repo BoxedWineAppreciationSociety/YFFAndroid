@@ -2,6 +2,7 @@ package com.yackfolkfestival.android.yffandroid;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by chris on 1/3/17.
@@ -49,6 +50,7 @@ public class Performance {
     public String formattedTime() {
         Date date = new Date(time);
         SimpleDateFormat format = new SimpleDateFormat("k:mm");
+        format.setTimeZone(TimeZone.getTimeZone("Australia/Melbourne"));
         return format.format(date);
     }
 
